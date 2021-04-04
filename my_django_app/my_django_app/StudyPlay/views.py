@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.contrib import messages
 from StudyPlay.models import AdminModel
+from StudyPlay.models import ChildModel
 import mysql.connector
 # Create your views here.
 
@@ -30,8 +31,8 @@ def registerform(request):
 def registerFormChild(request):
     if request.method =='POST':
         saverecord=ChildModel()
-        saverecord.ID=request.POST.get('id')
-        saverecord.Pseudo=request.POST.get('name')
+        """saverecord.ID=request.POST.get('id')"""
+        saverecord.Pseudo=request.POST.get("name")
         saverecord.Password=request.POST.get('password')
         saverecord.Email=request.POST.get('email')
         saverecord.save()

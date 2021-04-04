@@ -8,5 +8,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('Test', views.MainDashBoard, name='main'),
     path('registerform', views.registerform) ,
-    path('registerform', views.registerFormChild)
+    path('registerformchild', views.registerFormChild),
     ]
