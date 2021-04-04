@@ -26,3 +26,13 @@ def registerform(request):
         saverecord.Email=request.POST.get('email')
         saverecord.save()
     return MainDashBoard(request)
+
+def registerFormChild(request):
+    if request.method =='POST':
+        saverecord=ChildModel()
+        saverecord.ID=request.POST.get('id')
+        saverecord.Pseudo=request.POST.get('name')
+        saverecord.Password=request.POST.get('password')
+        saverecord.Email=request.POST.get('email')
+        saverecord.save()
+    return MainDashBoard(request)
