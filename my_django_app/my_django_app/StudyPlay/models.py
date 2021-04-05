@@ -23,12 +23,6 @@ class ChildModel(models.Model):
         managed = True
         db_table = 'Child'
 
-class ChildModels(models.Model):
-    Pseudo= models.CharField(required='True',db_column='Pseudo',max_length=10)
-    Password = models.CharField(required='True',db_column='Password',max_length=4)
-    Email= models.TextField(required='True',db_column='Email')
-    class Meta:
-        managed = True
-        db_table = 'Child'
+
 
 
