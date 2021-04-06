@@ -17,6 +17,9 @@ print(db_connection)
 def MainDashBoard(request):
     return render(request,'registrationform.html')
 
+def ErrorPage(request):
+    return render(request,'ErrorPage.html')
+
 def registerform(request):
     if request.method =='POST':
         saverecord=AdminModel()
@@ -28,10 +31,16 @@ def registerform(request):
     return MainDashBoard(request)
 
 def registerFormChild(request):
+    cursor.execute("SELECT * FROM Child")
+    data = cursor.fetchall()
     if request.method =='POST':
         saverecord=ChildModel()
-        """saverecord.ID=request.POST.get('id')"""
         saverecord.Pseudo=request.POST.get("name")
         saverecord.Password=request.POST.get('password')
+        saverecord.Password=request.POST.get('email')
+    for item in data:
+        username,email=item
+        if saverecord.Pseudo=username or saverecord.Email=email
+            return ErrorPage(request)
         saverecord.save()
     return MainDashBoard(request)
