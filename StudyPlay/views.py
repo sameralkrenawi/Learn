@@ -38,9 +38,5 @@ def registerFormChild(request):
         saverecord.Pseudo=request.POST.get("name")
         saverecord.Password=request.POST.get('password')
         saverecord.Password=request.POST.get('email')
-    for item in data:
-        username,email=item
-        if saverecord.Pseudo=username or saverecord.Email=email
-            return ErrorPage(request)
         saverecord.save()
     return MainDashBoard(request)
