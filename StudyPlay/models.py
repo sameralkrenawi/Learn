@@ -17,7 +17,7 @@ class AdminModel(models.Model):
 
 class ChildModel(models.Model):
     Pseudo= models.CharField(db_column='Pseudo',max_length=10)
-    Password = models.CharField(db_column='Password',max_length=4)
+    Password = models.CharField(db_column='Password',max_length=100)
     Email= models.TextField(db_column='Email')
     class Meta:
         managed = True
