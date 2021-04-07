@@ -24,3 +24,13 @@ class ChildModel(models.Model):
         db_table = 'Child'
 
 
+class WorkersModel(models.Model):
+    ID = models.IntegerField(db_column='ID',primary_key=True)  # Field name made lowercase.
+    Workerid= models.CharField(db_column='Workerid',max_length=10)
+    Pseudo= models.CharField(db_column='Pseudo',max_length=10)
+    Password = models.CharField(db_column='Password',max_length=4)
+    Email= models.TextField(db_column='Email')
+    type= models.TextField(db_column='type')
+    class Meta:
+        managed = True
+        db_table = 'workers'
