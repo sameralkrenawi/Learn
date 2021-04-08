@@ -30,26 +30,23 @@ def registerform(request):
     return MainDashBoard(request)
 
 def registerFormChild(request):
-<<<<<<< HEAD
     cursor.execute("SELECT Pseudo,Email FROM Child")
     data = cursor.fetchall()
-=======
->>>>>>> 2467cf06e43bed0eff31b9117570059c85e88125
     if request.method =='POST':
         saverecord=ChildModel()
         """saverecord.ID=request.POST.get('id')"""
         saverecord.Pseudo=request.POST.get("name")
         saverecord.Password=request.POST.get('password')
         saverecord.Email=request.POST.get('email')
-<<<<<<< HEAD
         for item in data:
             username,email=item
             if saverecord.Pseudo==username or saverecord.Email==email:
                 return ErrorPage(request)
-=======
->>>>>>> 2467cf06e43bed0eff31b9117570059c85e88125
         saverecord.save()
     return MainDashBoard(request)
+
+def ErrorPage(request):
+    return render(request,'ErrorPage.html')
 
 def after_approuval_worker_insert(request):
     if request.method=='POST':
