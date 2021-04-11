@@ -5,6 +5,7 @@ from django.contrib import messages
 from StudyPlay.models import AdminModel
 from StudyPlay.models import ChildModel
 from StudyPlay.models import WorkersModel
+from StudyPlay.models import ParentsModel
 import mysql.connector
 # Create your views here.
 
@@ -17,7 +18,13 @@ cursor = db_connection.cursor()
 print(db_connection)
 
 def MainDashBoard(request):
-    return render(request,'registrationform.html')
+    return render(request, 'registrationform.html')
+
+def ChildDash(request):
+    return render(request, 'ChildDashBoard/index.html')
+
+def ParentsDash(request):
+    return render(request, 'ParentsDashBoard/index.html')
 
 def registerform(request):
     if request.method =='POST':
@@ -29,8 +36,27 @@ def registerform(request):
         saverecord.save()
     return MainDashBoard(request)
 
+def registerFormParents(request):
+    cursor.execute("SELECT Pseudo,Email FROM parents")
+    data = cursor.fetchall()
+    cursor.execute("SELECT Pseudo,Email FROM child")
+    data2 = cursor.fetchall()
+
+    if request.method =='POST':
+        saverecord=ParentsModel()
+        """saverecord.ID=request.POST.get('id')"""
+        saverecord.Pseudo=request.POST.get("name")
+        saverecord.Password=request.POST.get('password')
+        saverecord.Email=request.POST.get('email')
+        for item in data:
+            username,email=item
+            if saverecord.Pseudo==username or saverecord.Email==email:
+                return ErrorPage(request)
+        saverecord.save()
+    return MainDashBoard(request)
+
 def registerFormChild(request):
-    cursor.execute("SELECT Pseudo,Email FROM Child")
+    cursor.execute("SELECT Pseudo,Email FROM child")
     data = cursor.fetchall()
     if request.method =='POST':
         saverecord=ChildModel()
@@ -103,14 +129,27 @@ def login(request):
     result = []
     cursor.execute("SELECT * FROM admin")
     data = cursor.fetchall()
+    cursor.execute("SELECT Pseudo,Password FROM Child")
+    data2 = cursor.fetchall()
+    cursor.execute("SELECT Pseudo,Password FROM Parents")
+    data3 = cursor.fetchall()
     if request.method=='POST':
          useridtest=request.POST.get('pseudo')
          passwordtest=request.POST.get('password')
     for item in data:    
         ID,Adminid,Pseudo,Password,type= item
         if useridtest==Pseudo and passwordtest == Password:
-             return AdminDash(request)
+             return AdminDash(request)    
+    for item in data2:    
+        Pseudo,Password= item
+        if useridtest==Pseudo and passwordtest == Password:
+             return ChildDash(request)      
+    for item in data3:    
+        Pseudo,Password= item
+        if useridtest==Pseudo and passwordtest == Password:
+             return ParentsDash(request)    
     return AdminDash(request)
+
 
 
 def Deleteworker(request):
@@ -137,3 +176,14 @@ def AdminDash(request):
 
 def index(request):
     return render(request,'index.html')
+
+"""def get_ip(request):
+    try:
+        x_forward=request.META.get("HTTP_X_FORWARDED_FOR")
+        if x_forward.split(",")[0]
+            ip=x_forward.split(",")[0]
+        else:
+            ip=request.META.get("REMOTE_ADDR")
+    except:
+        ip=""
+    return ip"""

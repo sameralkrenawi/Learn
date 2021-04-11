@@ -11,25 +11,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <link href="{%static 'admindesign/img/logostaticov.png' %}" rel="icon">
-    <title>Admin DashBoard</title>
+    <link href="{%static 'workerdesign/img/logostaticov.png' %}" rel="icon">
+    <title>Child DashBoard</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="{% static 'admindesign/vendor/bootstrap/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'workerdesign/vendor/bootstrap/css/bootstrap.min.css'%}">
     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <!-- Google fonts - Popppins for copy-->
     <link rel="stylesheet" href="{%static 'https://fonts.googleapis.com/css?family=Poppins:300,400,800' %}">
     <!-- orion icons-->
-    <link rel="stylesheet" href="{% static 'admindesign/css/orionicons.css' %}">
+    <link rel="stylesheet" href="{% static 'workerdesign/css/orionicons.css' %}">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="{% static 'admindesign/css/style.default.css' %}" id="theme-stylesheet">
+    <link rel="stylesheet" href="{% static 'workerdesign/css/style.default.css' %}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="{% static 'admindesign/css/custom.css' %}">
-    <link rel="stylesheet" href="{% static 'dashboard_design/css/popup.css' %}">
+    <link rel="stylesheet" href="{% static 'workerdesign/css/custom.css' %}">
 
     <!-- Favicon-->
     <link rel="shortcut icon" href="img/favicon.png?3">
@@ -70,7 +68,7 @@
             </div>
           </li>
           <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="{%static 'admindesign/img/AdminLogo.jpg'%}" alt="Jason Doe" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
-            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">שלום User</strong><small>מחובר\ת בתור מנהל\ת</small></a>
+            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">שלום User</strong><small>מחובר\ת בתור עובד\ת מדינה</small></a>
               <div class="dropdown-divider"></div><a href="index" class="dropdown-item">יציאה</a>
             </div>
           </li>
@@ -79,7 +77,7 @@
     </header>
     <div class="d-flex align-items-stretch">
       <div id="sidebar" class="sidebar py-3">
-        <img src="{%static 'admindesign/img/logostaticov.png' %}" width="60" height="65" style="position: relative;margin:20px 100px">
+        <img src="{%static 'workerdesign/img/logostaticov.png' %}" width="60" height="65" style="position: relative;margin:20px 100px">
         <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold big headings-font-family text-center">תפריט</style></div>
         <ul class="sidebar-menu list-unstyled">
               <li class="sidebar-list-item"><a href="index" class="sidebar-link text-muted active"><i class="o-home-1 mr-3 text-gray"></i><span>דף הבית</span></a></li>
@@ -92,17 +90,19 @@
               <li class="sidebar-list-item"><a href="contact" class="sidebar-link text-muted"><i class="o-imac-screen-1 mr-3 text-gray"></i><span>יצירת קשר</span></a></li>
         </ul>
       </div>
-      <div class="page-holder w-100 d-flex flex-wrap" style="vertical-align:center;margin:30px 255px">
+      <div class="page-holder w-100 d-flex flex-wrap" style="vertical-align:center;margin:30px 225px">
         <div class="row">
           <div class="col-lg-10" style="vertical-align:center;margin:30px 110px; text-align:center;">
             <div id="content-formatting" class="card mb-4">
               <div class="card-header"><b>אפשרויות</b></div>
               <div class="card-body text-xl">
-                <a href="#popup1">יצירת הודעות מתפרצות</a><br><br>
-                <a href="/StudyPlay/get_new_workers_table">הוספת עובד\ת מדינה חדש\ה</a><br><br>
-                <a href="/StudyPlay/get_workers_table">מחיקת עובד\ת</a><br><br>
-                <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=c7dabdfa68b08cb748092c7915c05a3f92c6d846'></script>
-               <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/778346/t/2"></script>
+                <a href="/Staticov/add_patient" target="_blank">הוספת חולה חדש למאגר הנתונים</a><br><br>
+                <a href="/Staticov/get_new_patient_table" target="_blank">רשימת חולים חדשים</a><br><br>
+                <a href="/Staticov/workerschedule">לוח הזמנים שלי</a><br><br>
+                <a href="/Staticov/offer_shifts">הגשת הצעת משמרת</a><br><br>
+                <a href="/Staticov/changepassword" target="_blank">הגדרות מערכת\שינוי פרטים אישיים</a><br><br>
+                <a href="#"></a><br>
+                <a href="#"></a><br>
             </div>
           </div>
         </div>
@@ -123,39 +123,15 @@
         </footer>
       </div>
     </div>
-
-    <div id="popup1" class="overlay">
-      <div class="popup">
-        <h2>יצירת הודעות מתפרצות</h2>
-        <a class="close" href="#">&times;</a>
-        <div class="contact-form">
-          <form action="/StudyPlay/AdminDash" method="POST" id="popup-form" autocomplete="off">
-            {% csrf_token %}
-          <p text-align="rtl">נא לרשום את ההודעה כאן:</p>
-          <div>
-            <fieldset>
-              <input type="text" name="popup-msg" rows="6" class="form-control" id="popup-msg" placeholder="...ההודעה"></textarea>
-            </fieldset>
-          </div>
-          <div class="col-lg-12">
-            <fieldset>
-              <button type="submit" id="popup-submit" class="main-button">שליחה</button>
-            </fieldset>
-          </div>
-          </form>
-        </div>
-      </div>
-    </div>
     
     <!-- JavaScript files-->
-    <script src="{%static 'admindesign/vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{%static 'admindesign/vendor/popper.js/umd/popper.min.js' %}"></script>
-    <script src="{%static 'admindesign/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{%static 'admindesign/vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
-    <script src="{%static 'admindesign/vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{%static 'dashboard_design/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{%static 'dashboard_design/vendor/popper.js/umd/popper.min.js' %}"></script>
+    <script src="{%static 'dashboard_design/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{%static 'dashboard_design/vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
+    <script src="{%static 'dashboard_design/vendor/chart.js/Chart.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="{%static 'admindesign/js/charts-home.js' %}"></script>
-    <script src="{%static 'admindesign/js/front.js' %}"></script>
-    
+    <script src="{%static 'dashboard_design/js/charts-home.js' %}"></script>
+    <script src="{%static 'dashboard_design/js/front.js' %}"></script>
   </body>
 </html>

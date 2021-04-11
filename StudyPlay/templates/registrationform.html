@@ -8,14 +8,14 @@
 <meta name="author" content="Softnio">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
-<link href="{%static 'Image/logostaticov.png' %}" rel="icon">
+<link href="{%static 'images/logostaticov.png' %}" rel="icon">
 <title>התחברות למערכת</title>
 </head>
 <section class="forms-section">
   <h1 class="section-title">StudyPlay-ברוכים הבאים ל</h1>
    <!-- Icon -->
    <div class="fadeIn first">
-    <img src="{% static 'Image/logostaticov.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
+    <img src="{%static 'images/logostaticov.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
   </div>
   <div class="forms">
     <div class="form-wrapper is-active">
@@ -74,10 +74,10 @@
 
 	<div class="form-wrapper">
 		<button type="button" class="switcher switcher-signup">
-		   Sign up child
+		   Sign up parents
 		  <span class="underline"></span>
 		</button>
-		<form action="/StudyPlay/registerformchild" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
+		<form action="/StudyPlay/registerformparents" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
 		  <fieldset>
 			{% csrf_token %}
 			<legend>אינה הכניס את ת"ז שם וסמסמא כדאי להרשם</legend>
