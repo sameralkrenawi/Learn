@@ -44,3 +44,10 @@ class ParentsModel(models.Model):
     class Meta:
         managed = True
         db_table = 'Parents'
+
+class ActivitiesModel(models.Model):
+    Name = models.CharField(db_column='Name',max_length=100)
+    Subject = models.CharField(db_column='Subject',max_length=100)
+    class Meta:
+        managed = True
+        db_table = 'activities'

@@ -1,5 +1,5 @@
 {% load static %}
-<h2>TABLE OF WORKERS </h2>
+<h2>Manage activities</h2>
 <div class="ripple-background">
   <div class="circle xxlarge shade1"></div>
   <div class="circle xlarge shade2"></div>
@@ -11,53 +11,55 @@
   <table class="fl-table">
       <thead>
           <tr>
-              <th>Workerid</th>
-              <th>Pseudo</th>
-              <th>Password</th>
-              <th>Email</th>
-              <th>Type </th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Subject</th>
           </tr>
       </thead>
       <tbody>
           {% for item in data %}
               <tr>
-                <td>{{item.Workerid}}</td>
-                  <td>{{item.Pseudo}}</td>
-                  <td>{{item.Password}}</td>
-                  <td>{{item.Email}}</td>
-                  <td>{{item.type}}</td>
-                  <td>ממתין לאישור</td>
+                <td>{{item.ID}}</td>
+                <td>{{item.Name}}</td>
+                <td>{{item.Subject}}</td>
               </tr>
           {% endfor %}
       </tbody>
   </table>    
 </div>
-<br>
+
+
+ 
 <div class="login-form">
-    <img src="{% static 'images/logostaticov.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
-    <div class="form-container">
-      <div class="form-heading">
-        מחיקת עובד
-      </div>
-      <img src="{% static 'images/logostaticov.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
-      <div class="form-element">
-        <form action="/StudyPlay/Deleteworker" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
-            {% csrf_token %}
-            <label class="fa fa-user" for="taz"></label>
-            <input type="text" id="id" name="id" placeholder="...הזן תז">
-      </div>
-      <div class="form-element">
-        <label class="fa fa-lock" for="name"></label>
-        <input type="text" id="name" name="name" placeholder="...הזן שם העובד">
-      </div> 
-      <div class="form-element">
-        <button id="login-submit">מחק</button> 
-      </form>
+  <img src="{% static 'images/logostudyplay.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
+  <div class="form-container">
+    <div class="form-heading">
+      Add activity
     </div>
-  </div>
-</div>
-     
-  <style>
+    <img src="{% static 'images/logostudyplay.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
+    <div class="input-block">
+      <form action="/StudyPlay/addActivity" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
+        <fieldset>
+          {% csrf_token %}
+            <legend>אינה הכניס את ת"ז שם וסמסמא כדאי להרשם</legend>
+            <div class="input-block">
+                <label for="name">Name</label>
+                <input type="name" id="name" name="name" placeholder="Put name... " class="form-control required">
+            </div>
+            <div class="input-block">
+                <label for="subject">Subject</label>
+                <input type="name" id="subject" name="subject" placeholder="Put subject..." class="form-control required">
+            </div>
+          <button id="login-submit">submit</button> 
+        </form>
+      </div>
+  
+    </div>
+  
+    <style>
+
+  @import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css";
+  @import "https://fonts.googleapis.com/css?family=Open+Sans:400,600|Raleway";
   @import url('https://fonts.googleapis.com/css?family=Amatic+SC');
 
 
@@ -338,9 +340,7 @@ body{
         text-align: center;
     }
 }
-@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css";
-@import "https://fonts.googleapis.com/css?family=Open+Sans:400,600|Raleway";
-  
+
   * {
     margin:0px;
     padding:0px;
@@ -356,7 +356,7 @@ body{
     left:50%;
     transform:translate(-50%,-50%);
     width:350px;
-    height:600px;
+    height:680px;
     background:#f5f5f5;
     overflow:hidden;
     box-shadow:10px 6px 10px #555;
@@ -531,61 +531,5 @@ body{
       transform: scale(0.8);
     }
   }
-
- .underlined-a {
-	 text-decoration: none;
-	 color: aqua;
-	 padding-bottom: 0.15em;
-	 box-sizing: border-box;
-	 box-shadow: inset 0 -0.2em 0 aqua;
-	 transition: 0.2s;
-}
- .underlined-a:hover {
-	 color: #222;
-	 box-shadow: inset 0 -2em 0 aqua;
-	 transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
-}
- .brk-btn {
-	 position: relative;
-	 background: none;
-	 color: aqua;
-	 text-transform: uppercase;
-	 text-decoration: none;
-	 border: 0.2em solid aqua;
-	 padding: 0.5em 1em;
-}
- .brk-btn::before {
-	 content: "";
-	 display: block;
-	 position: absolute;
-	 width: 10%;
-	 background: #222;
-	 height: 0.3em;
-	 right: 20%;
-	 top: -0.21em;
-	 transform: skewX(-45deg);
-	 -webkit-transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
-	 transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
-}
- .brk-btn::after {
-	 content: "";
-	 display: block;
-	 position: absolute;
-	 width: 10%;
-	 background: #222;
-	 height: 0.3em;
-	 left: 20%;
-	 bottom: -0.25em;
-	 transform: skewX(45deg);
-	 -webkit-transition: all 0.45 cubic-bezier(0.86, 0, 0.07, 1);
-	 transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
-}
- .brk-btn:hover::before {
-	 right: 80%;
-}
- .brk-btn:hover::after {
-	 left: 80%;
-}
- 
   
 </style>

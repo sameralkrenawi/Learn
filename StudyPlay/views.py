@@ -6,6 +6,7 @@ from StudyPlay.models import AdminModel
 from StudyPlay.models import ChildModel
 from StudyPlay.models import WorkersModel
 from StudyPlay.models import ParentsModel
+from StudyPlay.models import ActivitiesModel
 import mysql.connector
 # Create your views here.
 
@@ -25,6 +26,12 @@ def ChildDash(request):
 
 def ParentsDash(request):
     return render(request, 'ParentsDashBoard/index.html')
+
+def AdminDash(request):
+    return render(request,'AdminDashBoard/index.html')
+
+def index(request):
+    return render(request,'index.html')
 
 def registerform(request):
     if request.method =='POST':
@@ -162,7 +169,7 @@ def Deleteworker(request):
         for item in data:
             ID,Workerid,Pseudo,Password,Email,type = item
             if Workerid==useridworker and Pseudo == workername :
-                cursor.execute("DELETE FROM `workers` WHERE `workers`.`ID` = '%s';"%(ID))
+                cursor.execute("DELETE FROM workers WHERE workers.ID = '%s';"%(ID))
                 db_connection.commit()
                 messages.success(request,'עובד הוסר מהמערכת ')
                 return get_workers_table(request)
@@ -170,12 +177,36 @@ def Deleteworker(request):
         messages.success(request,'עובד לא נמצא במערכת ')
         return index(request)
 
+def ManageActivities(request):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM activities")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Name,Subject = item
+        result['data'].append({
+            'ID':ID,
+            'Name':Name,
+            'Subject':Subject,
+        })
+        print(result)
+    return render(request,'AdminDashBoard/manageActivities.html', result)
 
-def AdminDash(request):
-       return render(request,'index.html')
-
-def index(request):
-    return render(request,'index.html')
+def AddActivity(request):
+    cursor.execute("SELECT Name,Subject FROM activities")
+    data = cursor.fetchall()
+    if request.method =='POST':
+        saverecord=ActivitiesModel()
+        """saverecord.ID=request.POST.get('id')"""
+        saverecord.Name=request.POST.get("Name")
+        saverecord.Subject=request.POST.get('Subject')
+        for item in data:
+            name,subject=item
+            if saverecord.Name==name and saverecord.Subject==subject:
+                return ErrorPage(request)
+        saverecord.save()
+    return ManageActivities(request)
 
 """def get_ip(request):
     try:

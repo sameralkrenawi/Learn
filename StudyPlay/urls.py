@@ -16,4 +16,9 @@ urlpatterns = [
     path('Deleteworker', views.Deleteworker),
     path('get_workers_table', views.get_workers_table),
     path('get_new_workers_table', views.get_new_workers_table),
+    path('adminDash', views.AdminDash),
+    path('childDash', views.ChildDash),
+    path('parentDash', views.ParentsDash),
+    path('manageActivities', views.ManageActivities),
+    path('addActivity', views.AddActivity),
     ]
