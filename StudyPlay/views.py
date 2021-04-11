@@ -38,7 +38,12 @@ def registerform(request):
         saverecord=AdminModel()
         saverecord.AdminId=request.POST.get('id')
         saverecord.Pseudo=request.POST.get('name')
-        saverecord.Password=request.POST.get('password')
+        #saverecord.Password=request.POST.get('password')
+        #
+        clearPassNoHash=saverecord.cleaned_data['password']
+        password = make_password(clearPassNoHash, None, 'md5')
+        saverecord.set_password(password)
+        #
         saverecord.Email=request.POST.get('email')
         saverecord.save()
     return MainDashBoard(request)
@@ -53,7 +58,12 @@ def registerFormParents(request):
         saverecord=ParentsModel()
         """saverecord.ID=request.POST.get('id')"""
         saverecord.Pseudo=request.POST.get("name")
-        saverecord.Password=request.POST.get('password')
+        #saverecord.Password=request.POST.get('password')
+        #
+        clearPassNoHash=saverecord.cleaned_data['password']
+        password = make_password(clearPassNoHash, None, 'md5')
+        saverecord.set_password(password)
+        #
         saverecord.Email=request.POST.get('email')
         for item in data:
             username,email=item
