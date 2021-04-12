@@ -68,3 +68,14 @@ body {
 .card.done .line2 {
   animation: 500ms ScaleDown forwards;
 }
+.form {
+  transform-origin: 0 50%;
+  transition: transform 500ms, opacity 500ms;
+}
+.card.saving .form {
+  transform: translateY(-16px) scale(.8);
+}
+.card.done .form {
+  transform: translateY(-16px) scale(.8);
+  opacity: 0;
+}
