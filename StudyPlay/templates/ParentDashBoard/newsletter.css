@@ -9,3 +9,13 @@ body {
   margin: 0;
   width: 100vw;
 }
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  height: 200px;
+  overflow: hidden;
+  padding: 20px;
+  position: relative;
+  width: 300px;
+}
