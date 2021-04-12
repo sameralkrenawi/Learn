@@ -30,3 +30,14 @@ body {
   height: 38px;
   margin: 5px 0 0;
 }
+.line {
+  left: 0;
+  position: absolute;
+  width: 340px;
+}
+.line path {
+  fill: none;
+  stroke: black;
+  stroke-width: 2;
+  stroke-dasharray: 300 1903;
+}
