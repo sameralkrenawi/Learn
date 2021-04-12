@@ -331,3 +331,7 @@ textarea:hover {
   border: solid 1px #b3aca7;
   border-top: none;
 }
+
+#submit:hover {
+  color: #e2dedb;
+}
