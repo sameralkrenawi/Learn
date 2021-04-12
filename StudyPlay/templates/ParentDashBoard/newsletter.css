@@ -24,3 +24,9 @@ body {
   height: 29px;
   margin-bottom: 0;
 }
+.text {
+  color: #667;
+  font-size: 1em;
+  height: 38px;
+  margin: 5px 0 0;
+}
