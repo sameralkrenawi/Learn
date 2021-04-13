@@ -40,7 +40,7 @@ def registerform(request):
         saverecord.Pseudo=request.POST.get('name')
         #saverecord.Password=request.POST.get('password')
         #
-        clearPassNoHash=request.cleaned_data['password']
+        clearPassNoHash=saverecord.cleaned_data['password']
         password = make_password(clearPassNoHash, None, 'md5')
         saverecord.set_password(password)
         #
@@ -209,14 +209,33 @@ def AddActivity(request):
     if request.method =='POST':
         saverecord=ActivitiesModel()
         """saverecord.ID=request.POST.get('id')"""
-        saverecord.Name=request.POST.get("Name")
-        saverecord.Subject=request.POST.get('Subject')
+        saverecord.Name=request.POST.get("name")
+        saverecord.Subject=request.POST.get('subject')
         for item in data:
             name,subject=item
             if saverecord.Name==name and saverecord.Subject==subject:
                 return ErrorPage(request)
         saverecord.save()
     return ManageActivities(request)
+
+def DeleteActivity(request):
+    if request.method=='POST':
+        activityID=request.POST.get('id')
+        result = []
+        cursor.execute("SELECT ID FROM activities")
+        data = cursor.fetchall()    
+        for item in data:
+            ID = item
+            if ID == activityID:
+                cursor.execute("DELETE FROM activities WHERE ID = '%s';"%(ID))
+                db_connection.commit()
+                messages.success(request,'Activity was deleted to system')
+                return ManageActivities(request)
+            else: 
+                messages.success(request,'Activity doesnt exist in the system ')
+                return ManageActivities(request)
+
+
 
 """def get_ip(request):
     try:

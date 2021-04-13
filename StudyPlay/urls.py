@@ -21,4 +21,5 @@ urlpatterns = [
     path('parentDash', views.ParentsDash),
     path('manageActivities', views.ManageActivities),
     path('addActivity', views.AddActivity),
+    path('deleteActivity', views.DeleteActivity),
     ]
