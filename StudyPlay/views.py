@@ -163,24 +163,6 @@ def get_workers_table(request):
         print(result)
     return render(request,'AdminDashBoard/deleteuser.html', result)
 
-def get_workers_table(request):
-    result={
-        'data': []
-    }
-    cursor.execute("SELECT * FROM workers")
-    data = cursor.fetchall()
-    for item in data:
-        ID,Workerid,Pseudo,Password,Email,type = item
-        result['data'].append({
-            'id':ID,
-            'Workerid':Workerid,
-            'Pseudo':Pseudo,
-            'Password':Password,
-            'Email':Email,
-            'type':type,
-        })
-        print(result)
-    return render(request,'AdminDashBoard/deleteuser.html', result)
 
 def get_child_FromP_table(request):
     result={
