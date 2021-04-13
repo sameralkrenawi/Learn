@@ -256,22 +256,7 @@ def ManageActivities(request):
         })
         print(result)
     return render(request,'AdminDashBoard/manageActivities.html', result)
-
-def ManageActivities(request):
-    result={
-        'data': []
-    }
-    cursor.execute("SELECT * FROM activities")
-    data = cursor.fetchall()
-    for item in data:
-        ID,Name,Subject = item
-        result['data'].append({
-            'ID':ID,
-            'Name':Name,
-            'Subject':Subject,
-        })
-        print(result)
-    return render(request,'AdminDashBoard/manageActivities.html', result)
+s
 
 def AddActivity(request):
     cursor.execute("SELECT Name,Subject FROM activities")
