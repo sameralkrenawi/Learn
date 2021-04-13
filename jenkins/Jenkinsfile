@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 pipeline {
     agent none
     stages {
@@ -28,35 +27,4 @@ pipeline {
             }
         }
     }
-=======
-pipeline {
-    agent none
-    stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'python:3-alpine'
-                }
-            }
-            steps {
-                sh 'python -m py_compile StudyPlay/models.py StudyPlay/views.py'
-            }
-        }
-        stage('Test') {
-            agent {
-                docker {
-                    image 'qnib/pytest'
-                }
-            }
-            steps {
-                sh 'python -m py_compile StudyPlay/models.py StudyPlay/views.py'
-            }
-            post {
-                always {
-                    junit 'test-reports/results.xml'
-                }
-            }
-        }
-    }
->>>>>>> 1b07c21f5ea6476521bc88da91fd1786fa6ad9c3
 }
