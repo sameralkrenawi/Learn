@@ -20,10 +20,10 @@ pipeline {
             steps {
                 sh 'python -m py_compile StudyPlay/models.py StudyPlay/views.py'
             }
-            post {
+            /*post {
                 always {
                     junit 'test-reports/results.xml'
-                }
+                }*/
             }
         }
     }
