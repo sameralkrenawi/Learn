@@ -16,6 +16,8 @@ global userid
 db_connection = mysql.connector.connect(
   host="localhost",
   user="root",
+  password="12345",
+
   database="studyplay"
 )
 cursor = db_connection.cursor()
@@ -159,7 +161,6 @@ def get_workers_table(request):
         })
         print(result)
     return render(request,'AdminDashBoard/deleteuser.html', result)
-
 
 def get_child_FromP_table(request):
     result={
@@ -314,9 +315,8 @@ def after_approuval_child_insert(request):
         messages.success(request,'Child Add ')
     else:
         messages.success(request,'Cant Add chil ')
-        return ParentsDash(request)    
+    return ParentsDash(request)    
 
-    return get_new_child_table(request)          
 
 def get_new_child_table(request,userid):
     result={
@@ -335,6 +335,7 @@ def get_new_child_table(request,userid):
                 'Email':Email,
                 'ParentsPseudo':ParentsPseudo,
             })
+            
         print(result)
     return render(request,'ParentsDashBoard/addchild.html', result)
 
