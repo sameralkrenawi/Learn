@@ -1,5 +1,5 @@
 {% load static %}
-<h2>עובדים ברשימת המתנה</h2>
+<h2>Table Of child</h2>
 <div class="ripple-background">
   <div class="circle xxlarge shade1"></div>
   <div class="circle xlarge shade2"></div>
@@ -27,7 +27,6 @@
                   <td>{{item.Age}}</td>
                   <td>{{item.Email}}</td>
                   <td>{{item.ParentsPseudo}}</td>
-
               </tr>
           {% endfor %}
       </tbody>
@@ -50,11 +49,11 @@
           <legend>אינה הכניס את ת"ז שם וסמסמא כדאי להרשם</legend>
           <div class="input-block">
             <label for="name">שם</label>
-            <input type="name" id="name" name="name" placeholder="...הזן שם pseudo child " class="form-control required">
+            <input type="name" id="name" name="name" placeholder="] pseudo child " class="form-control required">
           </div>
           <div class="input-block">
         <label for="password">סיסמה</label>
-              <input type="password" id="password" name="password" placeholder="...הזן סיסמה" class="form-control required">
+              <input type="password" id="password" name="password" placeholder="Password" class="form-control required">
       </div>
       <div class="input-block">
         <label for="age">age</label>
@@ -62,11 +61,11 @@
       </div>
       <div class="input-block">
       <label for="email">email</label>
-      <input type="email" id="email" name="email" placeholder="...הזן email" class="form-control required">
+      <input type="email" id="email" name="email" placeholder=" email" class="form-control required">
     </div>
     <div class="input-block">
       <label for="pseudo">ParentsPseudo</label>
-      <input type="pseudo" id="pseudo" name="pseudo" placeholder="...הזן your pseudo" class="form-control required">
+      <input type="pseudo" id="pseudo" name="pseudo" placeholder=" your pseudo" class="form-control required">
     </div>
         <div class="form-element">
           <button id="login-submit">הכנס</button> 

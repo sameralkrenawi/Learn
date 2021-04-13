@@ -24,7 +24,6 @@ urlpatterns = [
     path('get_workers_table', views.get_workers_table),
     path('get_child_FromP_table', views.get_child_FromP_table),
     path('get_parents_table', views.get_parents_table),
-
     path('get_new_workers_table', views.get_new_workers_table),
     path('adminDash', views.AdminDash),
     path('childDash', views.ChildDash),

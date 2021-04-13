@@ -24,7 +24,6 @@ print(db_connection)
 def registration(request):
     #regular registration before 
     return render(request,'registrationform.html')    #regular registration before 
-    return render(request,'registrationform.html')
 
 def MainDashBoard(request):
     return render(request, 'registrationform.html')
@@ -66,34 +65,23 @@ def registerform(request):
         saverecord.AdminId=request.POST.get('id')
         saverecord.Pseudo=request.POST.get('name')
         saverecord.Password=request.POST.get('password')
-        #
-<<<<<<< HEAD
-      #  clearPassNoHash=saverecord.cleaned_data['password']
-     #   password = make_password(clearPassNoHash, None, 'md5')
-     #   saverecord.set_password(password)
-=======
-        clearPassNoHash=request.cleaned_data['password']
-        password = make_password(clearPassNoHash, None, 'md5')
-        saverecord.set_password(password)
->>>>>>> 883c3ff363cb45119960c1888eaf519207ebd83d
-        #
         saverecord.Email=request.POST.get('email')
         saverecord.save()
+        messages.success(request,'Register Success ')
+    else:
+        return registerFormParents(request)    
     return MainDashBoard(request)
 
-def registerFormParents(request):
-    
-    cursor.execute("SELECT FROM parents")
-    data = cursor.fetchall()
-    #  clearPassNoHash=saverecord.cleaned_data['password']
-      #  password = make_password(clearPassNoHash, None, 'md5')           
+def registerFormParents(request):    
+    cursor.execute("SELECT * FROM Parents")
+    data = cursor.fetchall()       
     if request.method =='POST':
         saverecord=ParentsModel()
         saverecord.Pseudo=request.POST.get("name")
         saverecord.Password=request.POST.get('password')  
         saverecord.Email=request.POST.get('email')
         for item in data:
-            username,email=item
+            id,username,password,email=item
             if saverecord.Pseudo==username or saverecord.Email==email:
                 return ErrorPage(request)
         saverecord.save()
@@ -128,6 +116,10 @@ def after_approuval_worker_insert(request):
         saverecord.Email=request.POST.get('email')
         saverecord.type=request.POST.get('type')
         saverecord.save()
+        messages.success(request,'Worker Add ')
+    else:
+        messages.success(request,'Cant Add Worker ')
+        return AdminDash(request)    
     return get_new_workers_table(request)          
 
 def get_new_workers_table(request):
@@ -224,8 +216,10 @@ def login(request):
     for item in data:    
         Pseudo,Password= item
         if useridtest==Pseudo and passwordtest == Password:
-             return ParentsDash(request)    
-    return registerform(request)
+             return ParentsDash(request) 
+    else :
+        messages.error(request,' הפרטים שהוזנו לא נמצאים במערכת נא לחכות לאישור אם הפרטים נכונים')   
+        return registration(request)    
 
 def Deleteworker(request):
     if request.method=='POST':
@@ -296,6 +290,11 @@ def after_approuval_child_insert(request):
         saverecord.Email=request.POST.get('email')
         saverecord.ParentsPseudo=request.POST.get('pseudo')
         saverecord.save()
+        messages.success(request,'Child Add ')
+    else:
+        messages.success(request,'Cant Add chil ')
+        return ParentsDash(request)    
+
     return get_new_child_table(request)          
 
 def get_new_child_table(request,userid):
@@ -350,10 +349,10 @@ def Deletechild(request , ):
             if (Pseudo == childname and Parentname == ParentsPseudo)  :
                 cursor.execute("DELETE FROM child WHERE child.ID = '%s';"%(ID))
                 db_connection.commit()
-                messages.success(request,'child הוסר מהמערכת ')
+                messages.success(request,'Child Delete ')
                 return get_child_table(request)
     else: 
-        messages.success(request,'עובד לא נמצא במערכת ')
+        messages.success(request,'Child Not find enter the details againe ')
         return index(request)
 
 def CHANGE_PASSWORD(request):
