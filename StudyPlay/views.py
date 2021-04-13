@@ -67,9 +67,15 @@ def registerform(request):
         saverecord.Pseudo=request.POST.get('name')
         saverecord.Password=request.POST.get('password')
         #
+<<<<<<< HEAD
       #  clearPassNoHash=saverecord.cleaned_data['password']
      #   password = make_password(clearPassNoHash, None, 'md5')
      #   saverecord.set_password(password)
+=======
+        clearPassNoHash=request.cleaned_data['password']
+        password = make_password(clearPassNoHash, None, 'md5')
+        saverecord.set_password(password)
+>>>>>>> 883c3ff363cb45119960c1888eaf519207ebd83d
         #
         saverecord.Email=request.POST.get('email')
         saverecord.save()
