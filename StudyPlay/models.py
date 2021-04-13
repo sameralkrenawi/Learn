@@ -15,16 +15,27 @@ class AdminModel(models.Model):
         db_table = 'admin'
 
 
+<<<<<<< HEAD
 class ChildModel(models.Model):
+=======
+class ChildModel(models.Model):    
+    ID = models.IntegerField(db_column='ID',primary_key=True)  # Field name made lowercase.
+>>>>>>> bea6460f15442bc9f021e2cbe2124cc408b7c0ba
     Pseudo= models.CharField(db_column='Pseudo',max_length=10)
     Password = models.CharField(db_column='Password',max_length=100)
+    Age= models.TextField(db_column='Age')
     Email= models.TextField(db_column='Email')
+    ParentsPseudo= models.CharField(db_column='ParentsPseudo',max_length=100)
     class Meta:
         managed = True
-        db_table = 'Child'
+        db_table = 'child'
 
 
 class WorkersModel(models.Model):
+<<<<<<< HEAD
+=======
+    
+>>>>>>> bea6460f15442bc9f021e2cbe2124cc408b7c0ba
     ID = models.IntegerField(db_column='ID',primary_key=True)  # Field name made lowercase.
     Workerid= models.CharField(db_column='Workerid',max_length=10)
     Pseudo= models.CharField(db_column='Pseudo',max_length=10)
@@ -37,6 +48,10 @@ class WorkersModel(models.Model):
 
 
 class ParentsModel(models.Model):
+<<<<<<< HEAD
+=======
+    ID = models.IntegerField(db_column='ID',primary_key=True)  # Field name made lowercase.
+>>>>>>> bea6460f15442bc9f021e2cbe2124cc408b7c0ba
     Pseudo= models.CharField(db_column='Pseudo',max_length=10)
     Password = models.CharField(db_column='Password',max_length=100)
     Email= models.TextField(db_column='Email')

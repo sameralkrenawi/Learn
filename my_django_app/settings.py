@@ -138,4 +138,5 @@ STATICFILES_DIRS= [
     os.path.join(BASE_DIR, "static"),
     "Users/97254/Documents/my_django_app/my_django_app/StudyPlay/static",
     '/Users/dande/OneDrive/Documents/GitHub/studyPlay/StudyPlay/templates/static',
+    '/Users/97254/Documents/GitHub/studyPlay/StudyPlay/templates/static',
 ]

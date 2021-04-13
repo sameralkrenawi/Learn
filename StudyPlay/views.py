@@ -7,8 +7,11 @@ from StudyPlay.models import ChildModel
 from StudyPlay.models import WorkersModel
 from StudyPlay.models import ParentsModel
 from StudyPlay.models import ActivitiesModel
+from django.contrib.auth.forms import UserCreationForm
+
 import mysql.connector
 # Create your views here.
+global userid 
 
 db_connection = mysql.connector.connect(
   host="localhost",
@@ -18,14 +21,34 @@ db_connection = mysql.connector.connect(
 cursor = db_connection.cursor()
 print(db_connection)
 
+def registration(request):
+    #regular registration before 
+    return render(request,'registrationform.html')    #regular registration before 
+    return render(request,'registrationform.html')
+
 def MainDashBoard(request):
     return render(request, 'registrationform.html')
 
 def ChildDash(request):
-    return render(request, 'ChildDashBoard/index.html')
+    return render(request, 'ChildDashBoard/index.html',id=request.ID)
 
 def ParentsDash(request):
-    return render(request, 'ParentsDashBoard/index.html')
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT Pseudo,Password FROM parents")
+    data = cursor.fetchall()
+    if request.method=='POST':
+        useridtest=request.POST.get('pseudo')
+        passwordtest=request.POST.get('password')
+        for item in data:
+            Pseudo,Password = item
+            if useridtest==Pseudo and passwordtest == Password:
+                result['data'].append({
+                    'Pseudo':Pseudo,
+                    })
+        print(result)
+        return render(request, 'ParentsDashBoard/index.html',result)
 
 def AdminDash(request):
     return render(request,'AdminDashBoard/index.html')
@@ -33,37 +56,45 @@ def AdminDash(request):
 def index(request):
     return render(request,'index.html')
 
+def changepassword(request):
+    #page to change password to all users
+    return render(request, 'changepassword.html')
+
 def registerform(request):
     if request.method =='POST':
         saverecord=AdminModel()
         saverecord.AdminId=request.POST.get('id')
         saverecord.Pseudo=request.POST.get('name')
-        #saverecord.Password=request.POST.get('password')
+        saverecord.Password=request.POST.get('password')
         #
+<<<<<<< HEAD
         clearPassNoHash=saverecord.cleaned_data['password']
+=======
+<<<<<<< HEAD
+      #  clearPassNoHash=saverecord.cleaned_data['password']
+     #   password = make_password(clearPassNoHash, None, 'md5')
+     #   saverecord.set_password(password)
+=======
+        clearPassNoHash=request.cleaned_data['password']
+>>>>>>> bea6460f15442bc9f021e2cbe2124cc408b7c0ba
         password = make_password(clearPassNoHash, None, 'md5')
         saverecord.set_password(password)
+>>>>>>> 883c3ff363cb45119960c1888eaf519207ebd83d
         #
         saverecord.Email=request.POST.get('email')
         saverecord.save()
     return MainDashBoard(request)
 
 def registerFormParents(request):
-    cursor.execute("SELECT Pseudo,Email FROM parents")
+    
+    cursor.execute("SELECT FROM parents")
     data = cursor.fetchall()
-    cursor.execute("SELECT Pseudo,Email FROM child")
-    data2 = cursor.fetchall()
-
+    #  clearPassNoHash=saverecord.cleaned_data['password']
+      #  password = make_password(clearPassNoHash, None, 'md5')           
     if request.method =='POST':
         saverecord=ParentsModel()
-        """saverecord.ID=request.POST.get('id')"""
         saverecord.Pseudo=request.POST.get("name")
-        #saverecord.Password=request.POST.get('password')
-        #
-        clearPassNoHash=saverecord.cleaned_data['password']
-        password = make_password(clearPassNoHash, None, 'md5')
-        saverecord.set_password(password)
-        #
+        saverecord.Password=request.POST.get('password')  
         saverecord.Email=request.POST.get('email')
         for item in data:
             username,email=item
@@ -73,14 +104,15 @@ def registerFormParents(request):
     return MainDashBoard(request)
 
 def registerFormChild(request):
-    cursor.execute("SELECT Pseudo,Email FROM child")
+    cursor.execute("SELECT FROM child")
     data = cursor.fetchall()
     if request.method =='POST':
         saverecord=ChildModel()
-        """saverecord.ID=request.POST.get('id')"""
         saverecord.Pseudo=request.POST.get("name")
         saverecord.Password=request.POST.get('password')
+        saverecord.Age=request.POST.get("age")
         saverecord.Email=request.POST.get('email')
+        saverecord.ParentsPseudo=request.POST.get('pseudo')
         for item in data:
             username,email=item
             if saverecord.Pseudo==username or saverecord.Email==email:
@@ -101,7 +133,6 @@ def after_approuval_worker_insert(request):
         saverecord.type=request.POST.get('type')
         saverecord.save()
     return get_new_workers_table(request)          
-
 
 def get_new_workers_table(request):
     result={
@@ -141,33 +172,64 @@ def get_workers_table(request):
         print(result)
     return render(request,'AdminDashBoard/deleteuser.html', result)
 
+def get_child_FromP_table(request):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM child")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Pseudo,Password,Age,Email,ParentsPseudo = item
+        result['data'].append({
+            'ID':ID,
+            'Pseudo':Pseudo,
+            'Password':Password,
+            'Age':Age,
+            'Email':Email,
+            'ParentsPseudo':ParentsPseudo,
+            })
+    return render(request,'AdminDashBoard/getchild.html', result)
 
-def login(request):
-    result = []
+def get_parents_table(request):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM Parents")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Pseudo,Password,Email = item
+        result['data'].append({
+            'id':ID,
+            'Pseudo':Pseudo,
+            'Password':Password,
+            'Email':Email,
+        })
+    return render(request,'AdminDashBoard/getparents.html', result)
+
+def login(request):  
     cursor.execute("SELECT * FROM admin")
     data = cursor.fetchall()
-    cursor.execute("SELECT Pseudo,Password FROM Child")
-    data2 = cursor.fetchall()
-    cursor.execute("SELECT Pseudo,Password FROM Parents")
-    data3 = cursor.fetchall()
     if request.method=='POST':
          useridtest=request.POST.get('pseudo')
          passwordtest=request.POST.get('password')
+         userid=useridtest
     for item in data:    
         ID,Adminid,Pseudo,Password,type= item
         if useridtest==Pseudo and passwordtest == Password:
              return AdminDash(request)    
-    for item in data2:    
-        Pseudo,Password= item
-        if useridtest==Pseudo and passwordtest == Password:
-             return ChildDash(request)      
-    for item in data3:    
+    cursor.execute("SELECT Pseudo,Password FROM Child")
+    data = cursor.fetchall()
+    for item in data:    
         Pseudo,Password= item
         if useridtest==Pseudo and passwordtest == Password:
              return ParentsDash(request)    
-    return AdminDash(request)
-
-
+    cursor.execute("SELECT Pseudo,Password FROM Parents")
+    data = cursor.fetchall()
+    for item in data:    
+        Pseudo,Password= item
+        if useridtest==Pseudo and passwordtest == Password:
+             return ParentsDash(request)    
+    return registerform(request)
 
 def Deleteworker(request):
     if request.method=='POST':
@@ -247,3 +309,143 @@ def DeleteActivity(request):
     except:
         ip=""
     return ip"""
+
+def after_approuval_child_insert(request):
+    if request.method=='POST':
+        saverecord=ChildModel()
+        saverecord.Pseudo=request.POST.get('name')
+        saverecord.Password=request.POST.get('password')
+        saverecord.Age=request.POST.get('age')
+        saverecord.Email=request.POST.get('email')
+        saverecord.ParentsPseudo=request.POST.get('pseudo')
+        saverecord.save()
+    return get_new_child_table(request)          
+
+def get_new_child_table(request,userid):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM child")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Pseudo,Password,Age,Email,ParentsPseudo = item
+        if ParentsPseudo==userid:
+            result['data'].append({
+                'ID':ID,
+                'Pseudo':Pseudo,
+                'Password':Password,
+                'Age':Age,
+                'Email':Email,
+                'ParentsPseudo':ParentsPseudo,
+            })
+        print(result)
+    return render(request,'ParentsDashBoard/addchild.html', result)
+
+def get_child_table(request,userid):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM child")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Pseudo,Password,Age,Email,ParentsPseudo = item
+        if ParentsPseudo==userid:
+            result['data'].append({
+                'ID':ID,
+                'Pseudo':Pseudo,
+                'Password':Password,
+                'Age':Age,
+                'Email':Email,
+                'ParentsPseudo':ParentsPseudo,
+            })
+        print(result)
+    return render(request,'ParentsDashBoard/deletechild.html', result)
+
+def Deletechild(request , ):
+    if request.method=='POST':
+        childname=request.POST.get('name')
+        Parentname=request.POST.get('pseudo')
+        result = []
+        cursor.execute("SELECT * FROM child")
+        data = cursor.fetchall()    
+        for item in data:
+            ID,Pseudo,Password,Age,Email,ParentsPseudo= item
+            if (Pseudo == childname and Parentname == ParentsPseudo)  :
+                cursor.execute("DELETE FROM child WHERE child.ID = '%s';"%(ID))
+                db_connection.commit()
+                messages.success(request,'child הוסר מהמערכת ')
+                return get_child_table(request)
+    else: 
+        messages.success(request,'עובד לא נמצא במערכת ')
+        return index(request)
+
+def CHANGE_PASSWORD(request):
+    if request.method=='POST':
+        useridtest=request.POST.get('pseudo')
+        passwordcurrentpassword=request.POST.get('current_password')
+        passwordtest=request.POST.get('password')
+        cursor.execute("SELECT * FROM Parents")
+        data = cursor.fetchall()    
+        flag=0
+        for item in data:
+            Pseudo,Password,Email = item
+            if  Pseudo==useridtest and Password == passwordcurrentpassword :
+                cursor.execute("UPDATE `Parents` SET `Password` = '%s' WHERE `Parents`.`Pseudo` = '%s';"%(passwordtest,useridtest))
+                db_connection.commit()
+                flag = 1
+        if flag == 1 :
+            messages.success(request,'סיסמא הוחלפה בהצלחה')
+            return registration(request)  
+        if flag == 0 :   
+            cursor.execute("SELECT * FROM child")
+            data = cursor.fetchall()    
+            for item in data:
+                Pseudo,Password,Email = item
+                if Pseudo==useridtest and Password == passwordcurrentpassword :
+                    cursor.execute("UPDATE `child` SET `Password` = '%s' WHERE `child`.`Pseudo` = '%s';"%(passwordtest,useridtest))
+                    db_connection.commit()
+                    messages.success(request,'סיסמא הוחלפה בהצלחה')
+                    return registration(request)  
+
+        messages.error(request,'! הפרטים שהוזנו לא נמצאים במערכת')   
+        return changepassword(request)
+
+def connect_From_P(request):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM child")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Pseudo,Password,Age,Email,ParentsPseudo = item
+        if ParentsPseudo==request.POST.get('pseudo'):
+            ['data'].append({
+                'ID':ID,
+                'Pseudo':Pseudo,
+                'Password':Password,
+                'Age':Age,
+                'Email':Email,
+                'ParentsPseudo':ParentsPseudo,
+            })
+        print(result)
+    return render(request,'ParentsDashBoard/deletechild.html', result)
+
+def get_child_connection(request,userid):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM child")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Pseudo,Password,Age,Email,ParentsPseudo = item
+        if ParentsPseudo==userid:
+            result['data'].append({
+                'ID':ID,
+                'Pseudo':Pseudo,
+                'Password':Password,
+                'Age':Age,
+                'Email':Email,
+                'ParentsPseudo':ParentsPseudo,
+            })
+        print(result)
+    return render(request,'ParentsDashBoard/ChildConnection.html',result)
