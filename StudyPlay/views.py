@@ -66,20 +66,11 @@ def registerform(request):
         saverecord.AdminId=request.POST.get('id')
         saverecord.Pseudo=request.POST.get('name')
         saverecord.Password=request.POST.get('password')
-        #
-<<<<<<< HEAD
+        
         clearPassNoHash=saverecord.cleaned_data['password']
-=======
-<<<<<<< HEAD
-      #  clearPassNoHash=saverecord.cleaned_data['password']
-     #   password = make_password(clearPassNoHash, None, 'md5')
-     #   saverecord.set_password(password)
-=======
         clearPassNoHash=request.cleaned_data['password']
->>>>>>> bea6460f15442bc9f021e2cbe2124cc408b7c0ba
         password = make_password(clearPassNoHash, None, 'md5')
         saverecord.set_password(password)
->>>>>>> 883c3ff363cb45119960c1888eaf519207ebd83d
         #
         saverecord.Email=request.POST.get('email')
         saverecord.save()
@@ -152,6 +143,25 @@ def get_new_workers_table(request):
         })
         print(result)
     return render(request,'AdminDashBoard/addworker.html', result)
+
+def get_workers_table(request):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM workers")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Workerid,Pseudo,Password,Email,type = item
+        result['data'].append({
+            'id':ID,
+            'Workerid':Workerid,
+            'Pseudo':Pseudo,
+            'Password':Password,
+            'Email':Email,
+            'type':type,
+        })
+        print(result)
+    return render(request,'AdminDashBoard/deleteuser.html', result)
 
 def get_workers_table(request):
     result={
