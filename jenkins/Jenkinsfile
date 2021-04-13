@@ -4,11 +4,11 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'python:2-alpine'
+                    image 'python:3-alpine'
                 }
             }
             steps {
-                sh 'python -m py_compile StudyPlay/model.py StudyPlay/views.py'
+                sh 'python -m py_compile StudyPlay/models.py StudyPlay/views.py'
             }
         }
         stage('Test') {
@@ -18,7 +18,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'python -m py_compile StudyPlay/model.py StudyPlay/views.py'
+                sh 'python -m py_compile StudyPlay/models.py StudyPlay/views.py'
             }
             post {
                 always {
@@ -27,3 +27,4 @@ pipeline {
             }
         }
     }
+}
