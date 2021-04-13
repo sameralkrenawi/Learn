@@ -289,6 +289,23 @@ def DeleteActivity(request):
                 messages.success(request,'Activity doesnt exist in the system ')
                 return ManageActivities(request)
 
+def DeleteActivity(request):
+    if request.method=='POST':
+        activityID=request.POST.get('id')
+        result = []
+        cursor.execute("SELECT ID FROM activities")
+        data = cursor.fetchall()    
+        for item in data:
+            ID = item
+            if ID == activityID:
+                cursor.execute("DELETE FROM activities WHERE ID = '%s';"%(ID))
+                db_connection.commit()
+                messages.success(request,'Activity was deleted to system')
+                return ManageActivities(request)
+            else: 
+                messages.success(request,'Activity doesnt exist in the system ')
+                return ManageActivities(request)
+
 
 
 """def get_ip(request):
