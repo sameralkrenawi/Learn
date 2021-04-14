@@ -7,7 +7,10 @@ from StudyPlay.models import ChildModel
 from StudyPlay.models import WorkersModel
 from StudyPlay.models import ParentsModel
 from StudyPlay.models import ActivitiesModel
+from StudyPlay.models import CountriesModel
 from django.contrib.auth.forms import UserCreationForm
+
+
 
 import mysql.connector
 # Create your views here.
@@ -17,7 +20,6 @@ db_connection = mysql.connector.connect(
   host="localhost",
   user="root",
   password="12345",
-
   database="studyplay"
 )
 cursor = db_connection.cursor()
@@ -49,7 +51,7 @@ def ParentsDash(request):
                     'Pseudo':Pseudo,
                     })
         print(result)
-        return render(request,'ParentsDashBoard/index.html',result)
+        return render(request, 'ParentsDashBoard/index.html',result)
 
 def AdminDash(request):
     return render(request,'AdminDashBoard/index.html')
@@ -84,7 +86,7 @@ def registerFormParents(request):
         saverecord.Email=request.POST.get('email')
         saverecord.country=request.POST.get('country')
         for item in data:
-            id,username,password,email,country=item
+            id,username,password,email=item
             if saverecord.Pseudo==username or saverecord.Email==email:
                 return ErrorPage(request)
         saverecord.save()
@@ -163,6 +165,7 @@ def get_workers_table(request):
         print(result)
     return render(request,'AdminDashBoard/deleteuser.html', result)
 
+
 def get_child_FromP_table(request):
     result={
         'data': []
@@ -188,13 +191,12 @@ def get_parents_table(request):
     cursor.execute("SELECT * FROM Parents")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Email,country = item
+        ID,Pseudo,Password,Email = item
         result['data'].append({
             'id':ID,
             'Pseudo':Pseudo,
             'Password':Password,
             'Email':Email,
-            'country':country,
         })
     return render(request,'AdminDashBoard/getparents.html', result)
 
@@ -209,27 +211,21 @@ def login(request):
         ID,Adminid,Pseudo,Password,type= item
         if useridtest==Pseudo and passwordtest == Password:
              return AdminDash(request)    
-        else :
-            messages.error(request,' הפרטים שהוזנו לא נמצאים במערכת נא לחכות לאישור אם הפרטים נכונים')   
-            return registration(request)  
     cursor.execute("SELECT Pseudo,Password FROM Child")
     data = cursor.fetchall()
     for item in data:    
         Pseudo,Password= item
         if useridtest==Pseudo and passwordtest == Password:
              return ParentsDash(request)    
-        else :
-            messages.error(request,' הפרטים שהוזנו לא נמצאים במערכת נא לחכות לאישור אם הפרטים נכונים')   
-            return registration(request)  
     cursor.execute("SELECT Pseudo,Password FROM Parents")
     data = cursor.fetchall()
     for item in data:    
         Pseudo,Password= item
         if useridtest==Pseudo and passwordtest == Password:
              return ParentsDash(request) 
-        else :
-            messages.error(request,' הפרטים שהוזנו לא נמצאים במערכת נא לחכות לאישור אם הפרטים נכונים')   
-            return registration(request)    
+    else :
+        messages.error(request,' הפרטים שהוזנו לא נמצאים במערכת נא לחכות לאישור אם הפרטים נכונים')   
+        return registration(request)    
 
 def Deleteworker(request):
     if request.method=='POST':
@@ -245,9 +241,9 @@ def Deleteworker(request):
                 db_connection.commit()
                 messages.success(request,'עובד הוסר מהמערכת ')
                 return get_workers_table(request)
-        else: 
-            messages.success(request,'עובד לא נמצא במערכת ')
-            return index(request)
+    else: 
+        messages.success(request,'עובד לא נמצא במערכת ')
+        return index(request)
 
 def ManageActivities(request):
     result={
@@ -299,7 +295,6 @@ def DeleteActivity(request):
                 return ManageActivities(request)
 
 
-
 """def get_ip(request):
     try:
         x_forward=request.META.get("HTTP_X_FORWARDED_FOR")
@@ -323,8 +318,9 @@ def after_approuval_child_insert(request):
         messages.success(request,'Child Add ')
     else:
         messages.success(request,'Cant Add chil ')
-    return ParentsDash(request)    
+        return ParentsDash(request)    
 
+    return get_new_child_table(request)          
 
 def get_new_child_table(request,userid):
     result={
@@ -343,7 +339,6 @@ def get_new_child_table(request,userid):
                 'Email':Email,
                 'ParentsPseudo':ParentsPseudo,
             })
-            
         print(result)
     return render(request,'ParentsDashBoard/addchild.html', result)
 
@@ -455,3 +450,17 @@ def get_child_connection(request,userid):
             })
         print(result)
     return render(request,'ParentsDashBoard/ChildConnection.html',result)
+
+def pie_chart(request):
+    labels = []
+    data = []
+
+    queryset = CountriesModel.objects.order_by('-Count')[:5]
+    for country in queryset:
+        labels.append(country.Name)
+        data.append(country.Count)
+
+    return render(request, 'AdminDashBoard/pie_chart.html', {
+        'labels': labels,
+        'data': data,
+    })

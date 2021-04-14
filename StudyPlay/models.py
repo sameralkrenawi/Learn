@@ -56,3 +56,10 @@ class ActivitiesModel(models.Model):
     class Meta:
         managed = True
         db_table = 'activities'
+
+class CountriesModel(models.Model):
+    Name = models.CharField(db_column='Name',max_length=100)
+    Count = models.IntegerField(db_column='Count',default=0)
+    class Meta:
+        managed= True
+        db_table='countries'

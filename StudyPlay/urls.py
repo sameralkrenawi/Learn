@@ -31,4 +31,5 @@ urlpatterns = [
     path('manageActivities', views.ManageActivities),
     path('addActivity', views.AddActivity),
     path('deleteActivity', views.DeleteActivity),
+    path('pie-chart', views.pie_chart),
     ]
