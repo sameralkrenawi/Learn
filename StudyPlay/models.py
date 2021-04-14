@@ -45,6 +45,7 @@ class ParentsModel(models.Model):
     Pseudo= models.CharField(db_column='Pseudo',max_length=10)
     Password = models.CharField(db_column='Password',max_length=100)
     Email= models.TextField(db_column='Email')
+    country= models.TextField(db_column='country')
     class Meta:
         managed = True
         db_table = 'Parents'

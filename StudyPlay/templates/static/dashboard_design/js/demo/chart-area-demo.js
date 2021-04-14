@@ -79,7 +79,7 @@ function handleError(error){
   console.log({error});
 }
 
-$.ajax({url:"http://localhost:8000/Staticov/datapatient", success: handleData, error: handleError});
+$.ajax({url:"http://localhost:8000/StudyPlay/dataChild", success: handleData, error: handleError});
 
 
 // new Chart(document.getElementById("line-chart"), {
@@ -154,7 +154,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 $(document).ready(function(){
   // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
-  $.ajax({url: "http://localhost:8000/Staticov/datapatient", success: function(result){
+  $.ajax({url: "http://localhost:8000//datapatient", success: function(result){
     var myLineChart = new Chart(ctx, {
       type: 'line',
       data: {

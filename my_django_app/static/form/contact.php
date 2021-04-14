@@ -6,7 +6,7 @@ $mail = new PHPMailer();
 $emailTO = $emailBCC =  $emailCC = array(); $formEmail = '';
 
 ### Enter Your Sitename 
-$sitename = 'Staticov';
+$sitename = 'StudyName';
 
 ### Enter your email addresses: @required
 $emailTO[] = array( 'email' => 'email@yoursite.com', 'name' => 'Your Name' ); 

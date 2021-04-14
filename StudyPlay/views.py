@@ -16,6 +16,8 @@ global userid
 db_connection = mysql.connector.connect(
   host="localhost",
   user="root",
+  password="12345",
+
   database="studyplay"
 )
 cursor = db_connection.cursor()
@@ -80,8 +82,9 @@ def registerFormParents(request):
         saverecord.Pseudo=request.POST.get("name")
         saverecord.Password=request.POST.get('password')  
         saverecord.Email=request.POST.get('email')
+        saverecord.country=request.POST.get('country')
         for item in data:
-            id,username,password,email=item
+            id,username,password,email,country=item
             if saverecord.Pseudo==username or saverecord.Email==email:
                 return ErrorPage(request)
         saverecord.save()
@@ -160,7 +163,6 @@ def get_workers_table(request):
         print(result)
     return render(request,'AdminDashBoard/deleteuser.html', result)
 
-
 def get_child_FromP_table(request):
     result={
         'data': []
@@ -186,12 +188,13 @@ def get_parents_table(request):
     cursor.execute("SELECT * FROM Parents")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Email = item
+        ID,Pseudo,Password,Email,country = item
         result['data'].append({
             'id':ID,
             'Pseudo':Pseudo,
             'Password':Password,
             'Email':Email,
+            'country':country,
         })
     return render(request,'AdminDashBoard/getparents.html', result)
 
@@ -320,9 +323,8 @@ def after_approuval_child_insert(request):
         messages.success(request,'Child Add ')
     else:
         messages.success(request,'Cant Add chil ')
-        return ParentsDash(request)    
+    return ParentsDash(request)    
 
-    return get_new_child_table(request)          
 
 def get_new_child_table(request,userid):
     result={
@@ -341,6 +343,7 @@ def get_new_child_table(request,userid):
                 'Email':Email,
                 'ParentsPseudo':ParentsPseudo,
             })
+            
         print(result)
     return render(request,'ParentsDashBoard/addchild.html', result)
 
