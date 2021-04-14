@@ -47,7 +47,7 @@ def ParentsDash(request):
                     'Pseudo':Pseudo,
                     })
         print(result)
-        return render(request, 'ParentsDashBoard/index.html',result)
+        return render(request,'ParentsDashBoard/index.html',result)
 
 def AdminDash(request):
     return render(request,'AdminDashBoard/index.html')
@@ -206,21 +206,27 @@ def login(request):
         ID,Adminid,Pseudo,Password,type= item
         if useridtest==Pseudo and passwordtest == Password:
              return AdminDash(request)    
+        else :
+            messages.error(request,' הפרטים שהוזנו לא נמצאים במערכת נא לחכות לאישור אם הפרטים נכונים')   
+            return registration(request)  
     cursor.execute("SELECT Pseudo,Password FROM Child")
     data = cursor.fetchall()
     for item in data:    
         Pseudo,Password= item
         if useridtest==Pseudo and passwordtest == Password:
              return ParentsDash(request)    
+        else :
+            messages.error(request,' הפרטים שהוזנו לא נמצאים במערכת נא לחכות לאישור אם הפרטים נכונים')   
+            return registration(request)  
     cursor.execute("SELECT Pseudo,Password FROM Parents")
     data = cursor.fetchall()
     for item in data:    
         Pseudo,Password= item
         if useridtest==Pseudo and passwordtest == Password:
              return ParentsDash(request) 
-    else :
-        messages.error(request,' הפרטים שהוזנו לא נמצאים במערכת נא לחכות לאישור אם הפרטים נכונים')   
-        return registration(request)    
+        else :
+            messages.error(request,' הפרטים שהוזנו לא נמצאים במערכת נא לחכות לאישור אם הפרטים נכונים')   
+            return registration(request)    
 
 def Deleteworker(request):
     if request.method=='POST':
@@ -236,9 +242,9 @@ def Deleteworker(request):
                 db_connection.commit()
                 messages.success(request,'עובד הוסר מהמערכת ')
                 return get_workers_table(request)
-    else: 
-        messages.success(request,'עובד לא נמצא במערכת ')
-        return index(request)
+        else: 
+            messages.success(request,'עובד לא נמצא במערכת ')
+            return index(request)
 
 def ManageActivities(request):
     result={
