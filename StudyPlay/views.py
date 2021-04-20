@@ -35,6 +35,9 @@ def MainDashBoard(request):
 def ChildDash(request):
     return render(request, 'ChildDashBoard/index.html',id=request.ID)
 
+def contact(request):
+    return render(request,'AdminDashBoard/contact.html')
+
 def ParentsDash(request):
     result={
         'data': []
@@ -126,6 +129,24 @@ def after_approuval_worker_insert(request):
         messages.success(request,'Cant Add Worker ')
         return AdminDash(request)    
     return get_new_workers_table(request)          
+
+
+def sendemail(request):
+    contactdata = contactData.objects.get()
+    members = teamMembers.objects.filter(existencia=True)
+    templates = Templates.objects.get(isSelected=True)
+    categoria = Clasificacion.objects.filter(existencia=True)
+    enterprise = enterprisedata.objects.get()
+    content = request.POST.get('contenido', '')
+    name = request.POST.get('nombre', '')
+    email = request.POST.get('email', '')
+    subject = request.POST.get('asunto', '')
+    if request.method == 'POST' and email and name:
+        send_mail(subject, content, settings.EMAIL_HOST_USER, ['kike1996@hotmail.com'], fail_silently=False)
+    contexto = {'categoria':categoria,'templates':templates,'members':members,'contactdata':contactdata,'enterprise':enterprise}
+    return render(request, 'AdminDashBoard/contact.html', contexto)
+
+
 
 def get_new_workers_table(request):
     result={
