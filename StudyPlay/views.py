@@ -9,6 +9,12 @@ from StudyPlay.models import ParentsModel
 from StudyPlay.models import ActivitiesModel
 from StudyPlay.models import CountriesModel
 from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render
+from django.core.mail import send_mail
+from django.conf import settings
+
+
+
 
 
 
@@ -37,6 +43,9 @@ def ChildDash(request):
 
 def contact(request):
     return render(request,'AdminDashBoard/contact.html')
+
+def InformClient(request):
+    return render(request,'AdminDashBoard/sendemail.html')
 
 def ParentsDash(request):
     result={
@@ -132,19 +141,14 @@ def after_approuval_worker_insert(request):
 
 
 def sendemail(request):
-    contactdata = contactData.objects.get()
-    members = teamMembers.objects.filter(existencia=True)
-    templates = Templates.objects.get(isSelected=True)
-    categoria = Clasificacion.objects.filter(existencia=True)
-    enterprise = enterprisedata.objects.get()
-    content = request.POST.get('contenido', '')
-    name = request.POST.get('nombre', '')
-    email = request.POST.get('email', '')
-    subject = request.POST.get('asunto', '')
-    if request.method == 'POST' and email and name:
-        send_mail(subject, content, settings.EMAIL_HOST_USER, ['kike1996@hotmail.com'], fail_silently=False)
-    contexto = {'categoria':categoria,'templates':templates,'members':members,'contactdata':contactdata,'enterprise':enterprise}
-    return render(request, 'AdminDashBoard/contact.html', contexto)
+    if request.method == 'POST':
+        message = request.POST['message']
+        send_mail('Contact Form',
+		 message, 
+		 settings.EMAIL_HOST_USER,
+		 ['david.teboul.95@gmail.com'], 
+		 fail_silently=False)	
+    return render(request, 'AdminDashBoard/contact.html')
 
 
 

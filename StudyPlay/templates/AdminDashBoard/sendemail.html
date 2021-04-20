@@ -1,29 +1,15 @@
-<form method="POST" action=''>
-    {% csrf_token %}
-    <div class="control-group form-group">
-      <div class="controls">
-        <label>Nombre completo:</label>
-        <input type="text" class="form-control" id="nombre" required data-validation-required-message="Introduzca su nombre.">
-        <p class="help-block"></p>
-      </div>
-    </div>
-    <div class="control-group form-group">
-      <div class="controls">
-        <label>Asunto:</label>
-        <input type="text" class="form-control" id="asunto" required data-validation-required-message="Introduzca el asunto del correo.">
-      </div>
-    </div>
-    <div class="control-group form-group">
-      <div class="controls">
-        <label>Correo Electrónico:</label>
-        <input type="email" class="form-control" id="email" required data-validation-required-message="Introduzca su correo electrónico.">
-      </div>
-    </div>
-    <div class="control-group form-group">
-      <div class="controls">
-        <label>Mensaje:</label>
-        <textarea rows="10" cols="100" class="form-control" id="contenido" required data-validation-required-message="Escriba su mensaje" maxlength="999" style="resize:none"></textarea>
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Enviar mensaje</button>
-  </form>
+{% load static %}
+<!DOCTYPE html>
+<html>
+  {% if messages %}
+  {% for message in messages %}<script>alert("{% for message in messages %}{{ message }}\n{% endfor %}");</script>
+  {% endfor %}
+  {% endif %}
+<h3>Contact Form</h3>
+
+<form method="post" action="{% url 'sendemail' %}">
+	{% csrf_token %}
+	<textarea name="message" placeholder="Message..."></textarea>
+	<input type="submit" />
+</form>
+</html>
