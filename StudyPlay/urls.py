@@ -3,6 +3,7 @@ from . import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
+
 urlpatterns = [
     path('Test', views.MainDashBoard, name='main'),
     path('registerform', views.registerform) ,
@@ -16,6 +17,11 @@ urlpatterns = [
     path('get_child_table/<str:userid>/', views.get_child_table),
     path('get_child_connection/<str:userid>/', views.get_child_connection),
     path('Deletechild', views.Deletechild),
+    path('sendemail', views.sendemail, name='sendemail'),
+
+    
+    path('contact', views.contact, name='contact'),
+    path('InformClient', views.InformClient, name='InformClient'),
     path('after_approuval_child_insert', views.after_approuval_child_insert),
     path('changepassword', views.changepassword, name='changepassword'),
     path('change_password', views.CHANGE_PASSWORD, name='change_password'),

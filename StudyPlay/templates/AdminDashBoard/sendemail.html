@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  {% if messages %}
+  {% for message in messages %}<script>alert("{% for message in messages %}{{ message }}\n{% endfor %}");</script>
+  {% endfor %}
+  {% endif %}
+<h3>Contact Form</h3>
+
+<form method="post" action="{% url 'sendemail' %}">
+	{% csrf_token %}
+	<textarea name="message" placeholder="Message..."></textarea>
+	<input type="submit" />
+</form>
+</html>

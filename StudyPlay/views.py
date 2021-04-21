@@ -9,6 +9,12 @@ from StudyPlay.models import ParentsModel
 from StudyPlay.models import ActivitiesModel
 from StudyPlay.models import CountriesModel
 from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render
+from django.core.mail import send_mail
+from django.conf import settings
+
+
+
 
 
 
@@ -34,6 +40,12 @@ def MainDashBoard(request):
 
 def ChildDash(request):
     return render(request, 'ChildDashBoard/index.html',id=request.ID)
+
+def contact(request):
+    return render(request,'AdminDashBoard/contact.html')
+
+def InformClient(request):
+    return render(request,'AdminDashBoard/sendemail.html')
 
 def ParentsDash(request):
     result={
@@ -126,6 +138,19 @@ def after_approuval_worker_insert(request):
         messages.success(request,'Cant Add Worker ')
         return AdminDash(request)    
     return get_new_workers_table(request)          
+
+
+def sendemail(request):
+    if request.method == 'POST':
+        message = request.POST['message']
+        send_mail('Contact Form',
+		 message, 
+		 settings.EMAIL_HOST_USER,
+		 ['david.teboul.95@gmail.com'], 
+		 fail_silently=False)	
+    return render(request, 'AdminDashBoard/contact.html')
+
+
 
 def get_new_workers_table(request):
     result={
