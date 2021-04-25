@@ -18,7 +18,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'python manage.py test'
+                sh 'python -m py_compile StudyPlay/models.py StudyPlay/views.py'
             }
             /*post {
                 always {
