@@ -28,7 +28,7 @@ DEBUG = True
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'david.teboul.95@gmail.com'
-EMAIL_HOST_PASSWORD = 'David55Teb_oul'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -93,9 +93,9 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         },
-      #  'test':{
-      #      'NAME': 'test_civilian'
-    # }
+        'test':{
+            'NAME': 'test_studyplay'
+     }
         }
     }
 

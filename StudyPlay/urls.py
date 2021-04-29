@@ -18,8 +18,7 @@ urlpatterns = [
     path('get_child_connection/<str:userid>/', views.get_child_connection),
     path('Deletechild', views.Deletechild),
     path('sendemail', views.sendemail, name='sendemail'),
-
-    
+    path('sendWhatss', views.sendWhatss, name='sendWhatss'),
     path('contact', views.contact, name='contact'),
     path('InformClient', views.InformClient, name='InformClient'),
     path('after_approuval_child_insert', views.after_approuval_child_insert),

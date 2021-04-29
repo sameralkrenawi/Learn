@@ -13,11 +13,6 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
 
-
-
-
-
-
 import mysql.connector
 # Create your views here.
 global userid 
@@ -139,7 +134,6 @@ def after_approuval_worker_insert(request):
         return AdminDash(request)    
     return get_new_workers_table(request)          
 
-
 def sendemail(request):
     if request.method == 'POST':
         message = request.POST['message']
@@ -150,6 +144,16 @@ def sendemail(request):
 		 fail_silently=False)	
     return render(request, 'AdminDashBoard/contact.html')
 
+
+def sendWhatss(request):
+    if request.method == 'POST':
+        message = request.POST['message']
+        send_mail('Contact Form',
+		 message, 
+		 settings.EMAIL_HOST_USER,
+		 ['david.teboul.95@gmail.com'], 
+		 fail_silently=False)	
+    return render(request, 'AdminDashBoard/contact.html')
 
 
 def get_new_workers_table(request):
@@ -319,7 +323,6 @@ def DeleteActivity(request):
                 messages.success(request,'Activity doesnt exist in the system ')
                 return ManageActivities(request)
 
-
 """def get_ip(request):
     try:
         x_forward=request.META.get("HTTP_X_FORWARDED_FOR")
@@ -341,11 +344,15 @@ def after_approuval_child_insert(request):
         saverecord.ParentsPseudo=request.POST.get('pseudo')
         saverecord.save()
         messages.success(request,'Child Add ')
+        send_mail('Contact Form',
+		         'child add', 
+		         settings.EMAIL_HOST_USER,
+		         ['david.teboul.95@gmail.com'], 
+		        fail_silently=False)	
     else:
         messages.success(request,'Cant Add chil ')
         return ParentsDash(request)    
-
-    return get_new_child_table(request)          
+    return get_new_child_table(request,request.POST.get('pseudo'))          
 
 def get_new_child_table(request,userid):
     result={
@@ -400,7 +407,12 @@ def Deletechild(request , ):
                 cursor.execute("DELETE FROM child WHERE child.ID = '%s';"%(ID))
                 db_connection.commit()
                 messages.success(request,'Child Delete ')
-                return get_child_table(request)
+                send_mail('Contact Form',
+		         'child delete', 
+		         settings.EMAIL_HOST_USER,
+		         ['david.teboul.95@gmail.com'], 
+		         fail_silently=False)	
+                return get_child_table(request,ParentsPseudo)
     else: 
         messages.success(request,'Child Not find enter the details againe ')
         return index(request)
