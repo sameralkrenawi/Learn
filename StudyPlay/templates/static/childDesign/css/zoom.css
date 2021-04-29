@@ -1,0 +1,15 @@
+
+
+.btn:hover {
+  background: #eef;
+}
+
+.zoom {
+  bottom: 190px;
+}
+.zoom-out {
+  bottom: 120px;
+}
+.zoom-init {
+  bottom: 50px;
+}

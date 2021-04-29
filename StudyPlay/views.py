@@ -501,3 +501,5 @@ def pie_chart(request):
         'labels': labels,
         'data': data,
     })
+
+

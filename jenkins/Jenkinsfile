@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'amarhabneen/django_team24'
+                    image 'python:3-alpine'
                 }
             }
             steps {
@@ -14,11 +14,11 @@ pipeline {
         stage('Test') {
             agent {
                 docker {
-                    image 'amarhabneen/django_team24'
+                    image 'qnib/pytest'
                 }
             }
             steps {
-                sh 'python manage.py test'
+                sh 'python -m py_compile StudyPlay/models.py StudyPlay/views.py'
             }
             /*post {
                 always {
