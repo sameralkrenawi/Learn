@@ -341,16 +341,6 @@ def DeleteActivity(request):
                 messages.success(request,'Activity doesnt exist in the system ')
                 return ManageActivities(request)
 
-"""def get_ip(request):
-    try:
-        x_forward=request.META.get("HTTP_X_FORWARDED_FOR")
-        if x_forward.split(",")[0]
-            ip=x_forward.split(",")[0]
-        else:
-            ip=request.META.get("REMOTE_ADDR")
-    except:
-        ip=""
-    return ip"""
 
 def after_approuval_child_insert(request):
     if request.method=='POST':
