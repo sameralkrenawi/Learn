@@ -93,9 +93,9 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         },
-      #  'test':{
-      #      'NAME': 'test_civilian'
-    # }
+        'test':{
+            'NAME': 'test_studyplay'
+     }
         }
     }
 
