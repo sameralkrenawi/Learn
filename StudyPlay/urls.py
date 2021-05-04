@@ -38,4 +38,7 @@ urlpatterns = [
     path('addActivity', views.AddActivity),
     path('deleteActivity', views.DeleteActivity),
     path('pie-chart', views.pie_chart),
+    path('ExLecture',views.ExerciceLecture),
+    path('ExPuzzle',views.ExercicePuzzle),
+    path('ActivityDash',views.ActivityDash),
     ]

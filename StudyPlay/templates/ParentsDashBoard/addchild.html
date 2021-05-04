@@ -39,36 +39,35 @@
   <img src="/static/images/logostudyplay.png" width="75" height="77" id="icon" alt="User Icon"/>
   <div class="form-container">
     <div class="form-heading">
-      הכנסת עובד למערכת
+      Add child
     </div>
     <img src="/static/images/logostudyplay.png" width="75" height="77" id="icon" alt="User Icon"/>
     <div class="input-block">
       <form action="/StudyPlay/after_approuval_child_insert" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
         <fieldset>
           {% csrf_token %}
-          <legend>אינה הכניס את ת"ז שם וסמסמא כדאי להרשם</legend>
           <div class="input-block">
-            <label for="name">שם</label>
-            <input type="name" id="name" name="name" placeholder="] pseudo child " class="form-control required">
+            <label for="name">name</label>
+            <input type="name" id="name" name="name" placeholder="name... " class="form-control required">
           </div>
           <div class="input-block">
-        <label for="password">סיסמה</label>
-              <input type="password" id="password" name="password" placeholder="Password" class="form-control required">
+        <label for="password">password</label>
+              <input type="password" id="password" name="password" placeholder="Password..." class="form-control required">
       </div>
       <div class="input-block">
         <label for="age">age</label>
-              <input type="age" id="age" name="age" placeholder=" age" class="form-control required">
+              <input type="age" id="age" name="age" placeholder=" age..." class="form-control required">
       </div>
       <div class="input-block">
       <label for="email">email</label>
-      <input type="email" id="email" name="email" placeholder=" email" class="form-control required">
+      <input type="email" id="email" name="email" placeholder=" email..." class="form-control required">
     </div>
     <div class="input-block">
       <label for="pseudo">ParentsPseudo</label>
       <input type="pseudo" id="pseudo" name="pseudo" placeholder=" your pseudo" class="form-control required">
     </div>
         <div class="form-element">
-          <button id="login-submit">הכנס</button> 
+          <button id="login-submit">Submit</button> 
         </form>
       </div>
   

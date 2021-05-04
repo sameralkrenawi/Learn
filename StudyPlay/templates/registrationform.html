@@ -43,7 +43,7 @@
     </div> 
     <div class="form-wrapper">
       <button type="button" class="switcher switcher-signup">
-        הרשמה
+        Sign up admin
         <span class="underline"></span>
       </button>
       <form action="/StudyPlay/registerform" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
@@ -51,20 +51,20 @@
           {% csrf_token %}
           <legend>אינה הכניס את ת"ז שם וסמסמא כדאי להרשם</legend>
           <div class="input-block">
-            <label for="id">ת"ז</label>
-            <input type="id" minlength="3" id="id" name="id" placeholder="...הזן id ת.ז " class="form-control required">
+            <label for="id">ID</label>
+            <input type="id" minlength="3" id="id" name="id" placeholder="ID... " class="form-control required">
           </div>
           <div class="input-block">
-            <label for="name">שם</label>
-            <input type="name" id="name" name="name" placeholder="...הזן שם name " class="form-control required">
+            <label for="name">Pseudo</label>
+            <input type="name" id="name" name="name" placeholder="Pseudo... " class="form-control required">
           </div>
           <div class="input-block">
-			  <label for="password">סיסמה</label>
-              <input type="password" id="password" name="password" placeholder="...הזן סיסמה" class="form-control required">
+			  <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="Password..." class="form-control required">
 		  </div>
 		  <div class="input-block">
-			<label for="email">סיסמה</label>
-			<input type="email" id="email" name="email" placeholder="...הזן email" class="form-control required">
+			<label for="email">Email</label>
+			<input type="email" id="email" name="email" placeholder="Email..." class="form-control required">
 		</div>
 		 
         </fieldset>

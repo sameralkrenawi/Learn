@@ -39,7 +39,7 @@ def MainDashBoard(request):
     return render(request, 'registrationform.html')
 
 def ChildDash(request):
-    return render(request, 'ChildDashBoard/index.html',id=request.ID)
+    return render(request, 'ChildDashBoard/index.html')
 
 def contact(request):
     return render(request,'AdminDashBoard/contact.html')
@@ -67,6 +67,15 @@ def ParentsDash(request):
 
 def AdminDash(request):
     return render(request,'AdminDashBoard/index.html')
+
+def ActivityDash(request):
+    return render(request,'ChildDashBoard/ActivityDash.html')  
+
+def ExerciceLecture(request):
+    return render(request,'ChildDashBoard/ExerciceLecture.html')
+
+def ExercicePuzzle(request):
+    return render(request,'ChildDashBoard/ExercicePuzzle.html')
 
 def index(request):
     return render(request,'index.html')
@@ -241,7 +250,7 @@ def login(request):
     for item in data:    
         Pseudo,Password= item
         if useridtest==Pseudo and passwordtest == Password:
-             return ParentsDash(request)    
+             return ChildDash(request)    
     cursor.execute("SELECT Pseudo,Password FROM Parents")
     data = cursor.fetchall()
     for item in data:    
@@ -319,18 +328,6 @@ def DeleteActivity(request):
                 messages.success(request,'Activity doesnt exist in the system ')
                 return ManageActivities(request)
 
-
-"""def get_ip(request):
-    try:
-        x_forward=request.META.get("HTTP_X_FORWARDED_FOR")
-        if x_forward.split(",")[0]
-            ip=x_forward.split(",")[0]
-        else:
-            ip=request.META.get("REMOTE_ADDR")
-    except:
-        ip=""
-    return ip"""
-
 def after_approuval_child_insert(request):
     if request.method=='POST':
         saverecord=ChildModel()
@@ -342,10 +339,9 @@ def after_approuval_child_insert(request):
         saverecord.save()
         messages.success(request,'Child Add ')
     else:
-        messages.success(request,'Cant Add chil ')
+        messages.success(request,'Cant Add child')
         return ParentsDash(request)    
-
-    return get_new_child_table(request)          
+    return get_new_child_table(request,saverecord.ID)          
 
 def get_new_child_table(request,userid):
     result={
@@ -387,7 +383,7 @@ def get_child_table(request,userid):
         print(result)
     return render(request,'ParentsDashBoard/deletechild.html', result)
 
-def Deletechild(request , ):
+def Deletechild(request):
     if request.method=='POST':
         childname=request.POST.get('name')
         Parentname=request.POST.get('pseudo')

@@ -51,6 +51,7 @@ class ParentsModel(models.Model):
         db_table = 'Parents'
 
 class ActivitiesModel(models.Model):
+    ID = models.IntegerField(db_column='ID',primary_key=True) 
     Name = models.CharField(db_column='Name',max_length=100)
     Subject = models.CharField(db_column='Subject',max_length=100)
     class Meta:
@@ -58,6 +59,7 @@ class ActivitiesModel(models.Model):
         db_table = 'activities'
 
 class CountriesModel(models.Model):
+    ID = models.IntegerField(db_column='ID',primary_key=True) 
     Name = models.CharField(db_column='Name',max_length=100)
     Count = models.IntegerField(db_column='Count',default=0)
     class Meta:
