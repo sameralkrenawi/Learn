@@ -36,6 +36,9 @@ def MainDashBoard(request):
 def ChildDash(request):
     return render(request, 'ChildDashBoard/index.html',id=request.ID)
 
+def WorkerDash(request):
+    return render(request,'WorkerDashBoard/index.html')
+
 def contact(request):
     return render(request,'AdminDashBoard/contact.html')
 
@@ -144,6 +147,9 @@ def sendemail(request):
 		 fail_silently=False)	
     return render(request, 'AdminDashBoard/contact.html')
 
+def indexLibrary(request):
+    #regular registration before 
+    return render(request,'ParentsDashBoard/indexLibrary.html')    #regular registration before 
 
 def sendWhatss(request):
     if request.method == 'POST':
@@ -154,7 +160,6 @@ def sendWhatss(request):
 		 ['david.teboul.95@gmail.com'], 
 		 fail_silently=False)	
     return render(request, 'AdminDashBoard/contact.html')
-
 
 def get_new_workers_table(request):
     result={
@@ -193,7 +198,6 @@ def get_workers_table(request):
         })
         print(result)
     return render(request,'AdminDashBoard/deleteuser.html', result)
-
 
 def get_child_FromP_table(request):
     result={
@@ -252,6 +256,12 @@ def login(request):
         Pseudo,Password= item
         if useridtest==Pseudo and passwordtest == Password:
              return ParentsDash(request) 
+    cursor.execute("SELECT Pseudo,Password FROM Workers")
+    data = cursor.fetchall()
+    for item in data:    
+        Pseudo,Password= item
+        if useridtest==Pseudo and passwordtest == Password:
+            return WorkerDash(request)        
     else :
         messages.error(request,' הפרטים שהוזנו לא נמצאים במערכת נא לחכות לאישור אם הפרטים נכונים')   
         return registration(request)    
@@ -289,7 +299,6 @@ def ManageActivities(request):
         })
         print(result)
     return render(request,'AdminDashBoard/manageActivities.html', result)
-
 
 def AddActivity(request):
     cursor.execute("SELECT Name,Subject FROM activities")
@@ -422,30 +431,35 @@ def CHANGE_PASSWORD(request):
         useridtest=request.POST.get('pseudo')
         passwordcurrentpassword=request.POST.get('current_password')
         passwordtest=request.POST.get('password')
-        cursor.execute("SELECT * FROM Parents")
+        cursor.execute("SELECT Pseudo,Password FROM Parents")
         data = cursor.fetchall()    
         flag=0
         for item in data:
-            Pseudo,Password,Email = item
+            Pseudo,Password = item
             if  Pseudo==useridtest and Password == passwordcurrentpassword :
                 cursor.execute("UPDATE `Parents` SET `Password` = '%s' WHERE `Parents`.`Pseudo` = '%s';"%(passwordtest,useridtest))
                 db_connection.commit()
-                flag = 1
-        if flag == 1 :
-            messages.success(request,'סיסמא הוחלפה בהצלחה')
-            return registration(request)  
-        if flag == 0 :   
-            cursor.execute("SELECT * FROM child")
-            data = cursor.fetchall()    
-            for item in data:
-                Pseudo,Password,Email = item
-                if Pseudo==useridtest and Password == passwordcurrentpassword :
-                    cursor.execute("UPDATE `child` SET `Password` = '%s' WHERE `child`.`Pseudo` = '%s';"%(passwordtest,useridtest))
-                    db_connection.commit()
-                    messages.success(request,'סיסמא הוחלפה בהצלחה')
-                    return registration(request)  
-
-        messages.error(request,'! הפרטים שהוזנו לא נמצאים במערכת')   
+                messages.success(request,'סיסמא הוחלפה בהצלחה')
+                return registration(request)  
+        cursor.execute("SELECT Pseudo,Password FROM child")
+        data = cursor.fetchall()    
+        for item in data:
+            Pseudo,Password = item
+            if Pseudo==useridtest and Password == passwordcurrentpassword :
+                cursor.execute("UPDATE `child` SET `Password` = '%s' WHERE `child`.`Pseudo` = '%s';"%(passwordtest,useridtest))
+                db_connection.commit()
+                messages.success(request,'סיסמא הוחלפה בהצלחה')
+                return registration(request)  
+        cursor.execute("SELECT Pseudo,Password FROM workers")
+        data = cursor.fetchall()    
+        for item in data:
+            Pseudo,Password = item
+            if Pseudo==useridtest and Password == passwordcurrentpassword :
+                cursor.execute("UPDATE `workers` SET `Password` = '%s' WHERE `workers`.`Pseudo` = '%s';"%(passwordtest,useridtest))
+                db_connection.commit()
+                messages.success(request,'סיסמא הוחלפה בהצלחה')
+                return registration(request)  
+        messages.error(request,'! הפרט ים שהוזנו לא נמצאים במערכת')   
         return changepassword(request)
 
 def connect_From_P(request):
