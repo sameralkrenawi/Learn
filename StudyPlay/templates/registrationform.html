@@ -1,4 +1,4 @@
-{% load static %}  
+{% load static %}
 <head>
 	{% if messages %}
 	{% for message in messages %}<script>alert("{% for message in messages %}{{ message }}\n{% endfor %}");</script>
@@ -23,7 +23,7 @@
         כניסה למערכת
         <span class="underline"></span>
       </button>
-	  	
+
 	  <form action="/StudyPlay/login" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
 		{% csrf_token %}
 		<fieldset>
@@ -40,7 +40,7 @@
 	<button type="submit" class="btn-login">כניסה</button>
   </form>
 
-    </div> 
+    </div>
     <div class="form-wrapper">
       <button type="button" class="switcher switcher-signup">
         Sign up admin
@@ -66,7 +66,7 @@
 			<label for="email">Email</label>
 			<input type="email" id="email" name="email" placeholder="Email..." class="form-control required">
 		</div>
-		 
+
         </fieldset>
 		<button type="submit" class="btn-signup">המשך</button>
       </form>
@@ -104,8 +104,8 @@
 				<option>USA</option>
 			</select>
 		</div>
-		 
-		   
+
+
 
 
 
@@ -115,6 +115,9 @@
 	  </div>
   </div>
 </section>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 <style>
 .fadeIn.first {
