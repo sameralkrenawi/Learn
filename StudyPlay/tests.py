@@ -5,44 +5,55 @@ from django.urls import resolve, reverse
 from StudyPlay.views import *
 from StudyPlay.models import *
 import unittest
-from django.test.client import RequestFactory
 
 
 class TestUrls(unittest.TestCase):
-
     def testd(self):
-        url2=reverse('registerformchild')
-        url3=reverse('registerformparents')
-        url4=reverse('ErrorPage')
-        url5=reverse('index')
-        url6=reverse('after_approuval_worker_insert')
-        url7=reverse('get_new_workers_table')
-        url9=reverse('get_new_child_table/<str:userid>/')
-        url10=reverse('get_child_table/<str:userid>/')
-        url12=reverse('get_child_connection/<str:userid>/')
-        url13=reverse('Deletechild')
-        url14=reverse('sendemail')
-        url15=reverse('contact')
-        url16=reverse('changepassword')
-        url17=reverse('after_approuval_child_insert')
-        url18=reverse('InformClient')
-        url19=reverse('login')
-        url20=reverse('Deleteworker')
-
+        url1=reverse('index')
+        url2=reverse('ErrorPage')
+        url3=reverse('index')
+        url4=reverse('InformClient')
+        url5=reverse('sendemail')
+        url6=reverse('contact')
+        url7=reverse('changepassword')
+        print(resolve(url1))
         print(resolve(url2))
         print(resolve(url3))
         print(resolve(url4))
         print(resolve(url5))
         print(resolve(url6))
         print(resolve(url7))
-        print(resolve(url9))
-        print(resolve(url10))
-        print(resolve(url12))
-        print(resolve(url13))
-        print(resolve(url14))
-        print(resolve(url15))
-        print(resolve(url16))
-        print(resolve(url17))
-        print(resolve(url18))
-        print(resolve(url19))
-        print(resolve(url20))
+        print('______WORK TEST URL ______')
+
+
+        
+class Childtest(TestCase):
+    def test_Child(self):
+        item=ChildModel()
+        item.ID=1
+        item.Pseudo='keke'
+        item.Password='123456'
+        item.Age='10'
+        item.Email='david@gmail.com'
+        item.ParentsPseudo='samo'
+        item.save()
+        record=ChildModel.objects.get()
+        print('______WORK TEST CHILD GOOD ENTER______')
+        self.assertEqual(item.Pseudo, 'keke')
+        self.assertEqual(record, item)
+
+class Parentstest(TestCase):
+    def test_Parents(self):
+        item=ParentsModel()
+        item.ID=1
+        item.Pseudo='keke'
+        item.Password='123456'
+        item.Email='davidgmail.com'
+        item.Country='France'
+        item.save()
+        record=ParentsModel.objects.get()
+        print('______WORK TEST PARENTS NO GOOD ENTER______')
+
+        self.assertEqual(item.Pseudo, 'keke')
+        self.assertEqual(record, item)
+  

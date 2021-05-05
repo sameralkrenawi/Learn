@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -146,3 +148,6 @@ STATICFILES_DIRS= [
     '/Users/dande/OneDrive/Documents/GitHub/studyPlay/StudyPlay/templates/static',
     '/Users/97254/Documents/GitHub/studyPlay/StudyPlay/templates/static',
 ]
+
+##TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID')
+##TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN')

@@ -11,6 +11,7 @@ urlpatterns = [
     path('registerformparents', views.registerFormParents) ,
     path('ErrorPage',views.ErrorPage,name="ErrorPage") ,
     path('index', views.index, name='index') ,
+    path('send_notification',views.send_notification),
     path('after_approuval_worker_insert', views.after_approuval_worker_insert) ,
     path('get_new_workers_table', views.get_new_workers_table) , 
     path('get_new_child_table/<str:userid>/', views.get_new_child_table ) ,
