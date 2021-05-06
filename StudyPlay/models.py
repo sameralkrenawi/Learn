@@ -65,3 +65,11 @@ class CountriesModel(models.Model):
     class Meta:
         managed= True
         db_table='countries'
+
+class ReviewsModel(models.Model):
+    ID = models.IntegerField(db_column='ID',primary_key=True) 
+    Description = models.CharField(db_column='Description',max_length=100)
+    Ratings = models.IntegerField(db_column='Ratings')
+    class Meta:
+        managed= True
+        db_table='reviews'
