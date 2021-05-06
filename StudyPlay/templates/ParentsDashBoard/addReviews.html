@@ -38,7 +38,7 @@
   <body>
     <!-- navbar-->
     <header class="header">
-      <nav class="navbar navbar-expand-lg px-8 py-2 bg-white shadow"><a class="sidebar-toggler text-gray-400 mr-4 mr-lg-5 lead"><i class="fas fa-align-left"></i></a><a class="navbar-brand font-weight-bold text-uppercase text-xl text-blue">ברוכים הבאים</a>
+      <nav class="navbar navbar-expand-lg px-8 py-2 bg-white shadow"><a class="sidebar-toggler text-gray-400 mr-4 mr-lg-5 lead"><i class="fas fa-align-left"></i></a><a class="navbar-brand font-weight-bold text-uppercase text-xl text-blue">Leave a review for our website</a>
         <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
           <li class="nav-item">
             <form id="searchForm" class="ml-auto d-none d-lg-block">
@@ -77,12 +77,11 @@
     </header>
     <div class="d-flex align-items-stretch">
       <div id="sidebar" class="sidebar py-3">
-        <img src="/static/images/logostudyplay.png" width="60" height="65" style="position: relative;margin:20px 100px">
+        <img src="{%static 'images/logostudyplay.png' %}" width="60" height="65" style="position: relative;margin:20px 100px">
         <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold big headings-font-family text-center">תפריט</style></div>
         <ul class="sidebar-menu list-unstyled">
-              <li class="sidebar-list-item"><a href="index" class="sidebar-link text-muted active"><i class="o-home-1 mr-3 text-gray"></i><span>דף הבית</span></a></li>
-              <li class="sidebar-list-item"><a href="MainDashBoard" class="sidebar-link text-muted"><i class="o-sales-up-1 mr-3 text-gray"></i><span>סטטיסטיקות</span></a></li>
-              <li class="sidebar-list-item"><a href="index" class="sidebar-link text-muted"><i class="o-exit-1 mr-3 text-gray"></i><span>יציאה</span></a></li>
+              <li class="sidebar-list-item"><a href="registerform" class="sidebar-link text-muted active"><i class="o-home-1 mr-3 text-gray"></i><span>דף הבית</span></a></li>
+              <li class="sidebar-list-item"><a href="registerform" class="sidebar-link text-muted"><i class="o-exit-1 mr-3 text-gray"></i><span>יציאה</span></a></li>
         </ul>
         <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold big headings-font-family text-center">עזרה</div>
         <ul class="sidebar-menu list-unstyled">
@@ -90,28 +89,32 @@
               <li class="sidebar-list-item"><a href="contact" class="sidebar-link text-muted"><i class="o-imac-screen-1 mr-3 text-gray"></i><span>יצירת קשר</span></a></li>
         </ul>
       </div>
+      
       <div class="page-holder w-100 d-flex flex-wrap" style="vertical-align:center;margin:30px 225px">
         <div class="row">
           <div class="col-lg-10" style="vertical-align:center;margin:30px 110px; text-align:center;">
             <div id="content-formatting" class="card mb-4">
-              <div class="card-header"><b>אפשרויות</b></div>
               <div class="card-body text-xl">
-                <div class="card-body text-xl">       
-                  {% for item in data %}
-                          <a href="/StudyPlay/get_new_child_table/{{ item.Pseudo }}/ ">Add child</a><br><br>
-                          <a href="/StudyPlay/get_child_table/{{ item.Pseudo }}/ ">Delete child</a><br><br> 
-                          <a href="/StudyPlay/get_child_connection/{{ item.Pseudo }}/ ">connect child</a><br><br>  
-                  {% endfor %}
-                  <a href="/StudyPlay/indexLibrary">indexLibrary</a><br><br>  
-                  <a href="/StudyPlay/changepassword">Change password</a><br><br> 
-                  <a href="/StudyPlay/addReviews">Add reviews</a><br><br> 
-                  <form action="https://www.paypal.com/donate" method="post" target="_top">
-                    <input type="hidden" name="hosted_button_id" value="ZARGEF99Z3VUJ" />
-                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-                    <img alt="" border="0" src="https://www.paypal.com/en_IL/i/scr/pixel.gif" width="1" height="1" />
-                  </form>  
-                </div>                              
-              </body>
+                <div class="card-body text-xl"> 
+                <form action="/StudyPlay/addReviews" method="POST"  id="login-form" class="form form-login" autocomplete="off" role="main">
+                    {% csrf_token %}
+                <fieldset>
+                    <label class="form-label" for="contact-symptom">Description</label>
+                    <textarea name='description' id='description' rows="6" cols="50" class="form-control required"></textarea>
+                </div>      
+                <label class="form-label" for="contact-symptom">Rating</label>
+                <select type="rating" id='ratings' name="ratings" class="form-control required">
+                    <option selected></option>
+                    <option> 0 </option>
+                    <option> 1 </option>
+                    <option> 2 </option>
+                    <option> 3 </option>
+                    <option> 4 </option>
+                    <option> 5 </option>
+                </select> 
+                </fieldset> 
+                <button type="submit" class="btn-signup">submit</button>     
+                </form>                            
             </div>
         </div>
             <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
@@ -142,4 +145,12 @@
     <script src="{%static 'workerdesign/js/charts-home.js' %}"></script>
     <script src="{%static 'workerdesign/js/front.js' %}"></script>
   </body>
+  <style>
+      .btn-signup {
+	color: #5D93FF;
+	background: #fbfdff;
+	box-shadow: inset 0 0 0 2px #5D93FF;
+	transform: translateX(30%);
+    }
+  </style>
 </html>
