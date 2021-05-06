@@ -1,4 +1,4 @@
-{% load static %}  
+{% load static %}
 <head>
 	{% if messages %}
 	{% for message in messages %}<script>alert("{% for message in messages %}{{ message }}\n{% endfor %}");</script>
@@ -23,7 +23,7 @@
         כניסה למערכת
         <span class="underline"></span>
       </button>
-	  	
+
 	  <form action="/StudyPlay/login" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
 		{% csrf_token %}
 		<fieldset>
@@ -40,7 +40,7 @@
 	<button type="submit" class="btn-login">כניסה</button>
   </form>
 
-    </div> 
+    </div>
     <div class="form-wrapper">
       <button type="button" class="switcher switcher-signup">
         Sign up admin
@@ -66,7 +66,7 @@
 			<label for="email">Email</label>
 			<input type="email" id="email" name="email" placeholder="Email..." class="form-control required">
 		</div>
-		 
+
         </fieldset>
 		<button type="submit" class="btn-signup">המשך</button>
       </form>
@@ -104,15 +104,19 @@
 				<option>USA</option>
 			</select>
 		</div>
-
-
-
 		  </fieldset>
 		  <button type="submit" class="btn-signup">המשך</button>
 		</form>
 	  </div>
   </div>
 </section>
+
+
+<!-- social media links and icons  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<a href="https://www.facebook.com/Studyplay-103650768560325" class="fa fa-facebook"></a>
+<a href="https://www.instagram.com/study_play404/" class="fa fa-twitter"></a>
+<a href="https://twitter.com/studyplay2" class="fa fa-instagram"></a>
 
 <style>
 .fadeIn.first {
@@ -421,6 +425,24 @@ body {
 	background: #fbfdff;
 	box-shadow: inset 0 0 0 2px #5D93FF;
 	transform: translateX(30%);
+}
+
+
+/* social media links and icons  */
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+
+.fa-instagram {
+  background: #125688;
+  color: white;
 }
 
 </style>
