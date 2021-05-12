@@ -48,4 +48,6 @@ urlpatterns = [
     path('ExLecture',views.ExerciceLecture),
     path('ExPuzzle',views.ExercicePuzzle),
     path('ActivityDash',views.ActivityDash),
+    path('addReviews',views.addReviews),
+    path('getReviews',views.getReviews),
     ]

@@ -1,4 +1,4 @@
-{% load static %}  
+{% load static %}
 <head>
 	{% if messages %}
 	{% for message in messages %}<script>alert("{% for message in messages %}{{ message }}\n{% endfor %}");</script>
@@ -23,7 +23,7 @@
 		Enter to StudyPlay
         <span class="underline"></span>
       </button>
-	  	
+
 	  <form action="/StudyPlay/login" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
 		{% csrf_token %}
 		<fieldset>
@@ -42,6 +42,37 @@
 
     </div> 
     
+    </div>
+    <div class="form-wrapper">
+      <button type="button" class="switcher switcher-signup">
+        Sign up admin
+        <span class="underline"></span>
+      </button>
+      <form action="/StudyPlay/registerform" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
+        <fieldset>
+          {% csrf_token %}
+          <legend>אינה הכניס את ת"ז שם וסמסמא כדאי להרשם</legend>
+          <div class="input-block">
+            <label for="id">ID</label>
+            <input type="id" minlength="3" id="id" name="id" placeholder="ID... " class="form-control required">
+          </div>
+          <div class="input-block">
+            <label for="name">Pseudo</label>
+            <input type="name" id="name" name="name" placeholder="Pseudo... " class="form-control required">
+          </div>
+          <div class="input-block">
+			  <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="Password..." class="form-control required">
+		  </div>
+		  <div class="input-block">
+			<label for="email">Email</label>
+			<input type="email" id="email" name="email" placeholder="Email..." class="form-control required">
+		</div>
+
+        </fieldset>
+		<button type="submit" class="btn-signup">המשך</button>
+      </form>
+    </div>
 
 	<div class="form-wrapper">
 		<button type="button" class="switcher switcher-signup">
@@ -75,17 +106,23 @@
 				<option>USA</option>
 			</select>
 		</div>
-		 
-		   
-
-
-
 		  </fieldset>
 		  <button type="submit" class="btn-signup">המשך</button>
 		</form>
 	  </div>
   </div>
 </section>
+
+
+<!-- social media links and icons  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<a href="https://www.facebook.com/Studyplay-103650768560325" class="fa fa-facebook"></a>
+<a href="https://www.instagram.com/study_play404/" class="fa fa-twitter"></a>
+<a href="https://twitter.com/studyplay2" class="fa fa-instagram"></a>
+<br>
+
+<!--  Explaning page for the new users -->
+<p><a href="../ParentsDashBoard/explaningPage.html"> explaning page </a></p> <!-- CHECK IF THE PATH WITH this /  or  \   between the folder -->
 
 <style>
 .fadeIn.first {
@@ -394,6 +431,24 @@ body {
 	background: #fbfdff;
 	box-shadow: inset 0 0 0 2px #5D93FF;
 	transform: translateX(30%);
+}
+
+
+/* social media links and icons  */
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+
+.fa-instagram {
+  background: #125688;
+  color: white;
 }
 
 </style>

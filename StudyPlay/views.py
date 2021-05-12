@@ -8,6 +8,7 @@ from StudyPlay.models import WorkersModel
 from StudyPlay.models import ParentsModel
 from StudyPlay.models import ActivitiesModel
 from StudyPlay.models import CountriesModel
+from StudyPlay.models import ReviewsModel
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.core.mail import send_mail
@@ -94,6 +95,33 @@ def changepicture(request):
     #page to change password to all users
     return render(request, 'changepicture.html')
 
+def addReviews(request):
+    if request.method =='POST':
+        saverecord=ReviewsModel()
+        saverecord.Description=request.POST.get('description')
+        saverecord.Ratings=request.POST.get('ratings')
+        saverecord.save()
+        messages.success(request,'Review is sended successfuly')
+    else:
+        return render(request,'ParentsDashBoard/addReviews.html')    
+    return ParentsDash(request)
+
+def getReviews(request):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM reviews")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Description,Ratings = item
+        result['data'].append({
+            'ID':ID,
+            'Description':Description,
+            'Ratings':Ratings,
+        })
+        print(result)
+    return render(request,'AdminDashBoard/getReviews.html', result)
+
 def registerform(request):
     if request.method =='POST':
         saverecord=AdminModel()
@@ -115,6 +143,7 @@ def registerFormParents(request):
         saverecord=ParentsModel()
         saverecord.AdminId=request.POST.get('id')
         saverecord.Pseudo=request.POST.get("name")
+        saverecord.Pseudo=request.POST.get('name')
         saverecord.Password=request.POST.get('password')  
         saverecord.Email=request.POST.get('email')
         saverecord.country=request.POST.get('country')

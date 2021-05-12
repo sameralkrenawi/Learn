@@ -11,25 +11,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <link href="{%static 'admindesign/img/logostudyplay.png' %}" rel="icon">
-    <title>Admin DashBoard</title>
+    <link href="{%static '/static/images/logostudyplay.png' %}" rel="icon">
+    <title>Parents DashBoard</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="{% static 'admindesign/vendor/bootstrap/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'workerdesign/vendor/bootstrap/css/bootstrap.min.css'%}">
     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <!-- Google fonts - Popppins for copy-->
     <link rel="stylesheet" href="{%static 'https://fonts.googleapis.com/css?family=Poppins:300,400,800' %}">
     <!-- orion icons-->
-    <link rel="stylesheet" href="{% static 'admindesign/css/orionicons.css' %}">
+    <link rel="stylesheet" href="{% static 'workerdesign/css/orionicons.css' %}">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="{% static 'admindesign/css/style.default.css' %}" id="theme-stylesheet">
+    <link rel="stylesheet" href="{% static 'workerdesign/css/style.default.css' %}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="{% static 'admindesign/css/custom.css' %}">
-    <link rel="stylesheet" href="{% static 'dashboard_design/css/popup.css' %}">
+    <link rel="stylesheet" href="{% static 'workerdesign/css/custom.css' %}">
 
     <!-- Favicon-->
     <link rel="shortcut icon" href="img/favicon.png?3">
@@ -40,7 +38,7 @@
   <body>
     <!-- navbar-->
     <header class="header">
-      <nav class="navbar navbar-expand-lg px-8 py-2 bg-white shadow"><a class="sidebar-toggler text-gray-400 mr-4 mr-lg-5 lead"><i class="fas fa-align-left"></i></a><a class="navbar-brand font-weight-bold text-uppercase text-xl text-blue">Welcome</a>
+      <nav class="navbar navbar-expand-lg px-8 py-2 bg-white shadow"><a class="sidebar-toggler text-gray-400 mr-4 mr-lg-5 lead"><i class="fas fa-align-left"></i></a><a class="navbar-brand font-weight-bold text-uppercase text-xl text-blue">Leave a review for our website</a>
         <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
           <li class="nav-item">
             <form id="searchForm" class="ml-auto d-none d-lg-block">
@@ -70,8 +68,8 @@
             </div>
           </li>
           <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="{%static 'admindesign/img/AdminLogo.jpg'%}" alt="Jason Doe" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
-            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">שלום User</strong><small>מחובר\ת בתור מנהל\ת</small></a>
-              <div class="dropdown-divider"></div><a href="index" class="dropdown-item">Exit</a>
+            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">שלום User</strong><small>מחובר\ת בתור עובד\ת מדינה</small></a>
+              <div class="dropdown-divider"></div><a href="index" class="dropdown-item">יציאה</a>
             </div>
           </li>
         </ul>
@@ -79,41 +77,45 @@
     </header>
     <div class="d-flex align-items-stretch">
       <div id="sidebar" class="sidebar py-3">
-        <img src="{%static 'images/logostudyplay.png' %}" width="80" height="75" style="position: relative;margin:20px 100px">
-        <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold big headings-font-family text-center">Menu</style></div>
+        <img src="{%static 'images/logostudyplay.png' %}" width="60" height="65" style="position: relative;margin:20px 100px">
+        <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold big headings-font-family text-center">תפריט</style></div>
         <ul class="sidebar-menu list-unstyled">
-              <li class="sidebar-list-item"><a href="index" class="sidebar-link text-muted active"><i class="o-home-1 mr-3 text-gray"></i><span>Home page</span></a></li>
-              <li class="sidebar-list-item"><a href="MainDashBoard" class="sidebar-link text-muted"><i class="o-sales-up-1 mr-3 text-gray"></i><span>סטטיסטיקות</span></a></li>
-              <li class="sidebar-list-item"><a href="index" class="sidebar-link text-muted"><i class="o-exit-1 mr-3 text-gray"></i><span>Exit</span></a></li>
+              <li class="sidebar-list-item"><a href="registerform" class="sidebar-link text-muted active"><i class="o-home-1 mr-3 text-gray"></i><span>דף הבית</span></a></li>
+              <li class="sidebar-list-item"><a href="registerform" class="sidebar-link text-muted"><i class="o-exit-1 mr-3 text-gray"></i><span>יציאה</span></a></li>
         </ul>
         <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold big headings-font-family text-center">עזרה</div>
         <ul class="sidebar-menu list-unstyled">
-          <li class="sidebar-list-item"><a href="https://youtu.be/" class="sidebar-link text-muted"><i class="o-imac-screen-1 mr-3 text-gray"></i><span>סרטון הדרכה</span></a></li>
-              <li class="sidebar-list-item"><a href="contact1" class="sidebar-link text-muted"><i class="o-imac-screen-1 mr-3 text-gray"></i><span>יצירת קשר</span></a></li>
+          <li class="sidebar-list-item"><a href="https://youtu.be/nD1A_lXAynM" class="sidebar-link text-muted"><i class="o-imac-screen-1 mr-3 text-gray"></i><span>סרטון הדרכה</span></a></li>
+              <li class="sidebar-list-item"><a href="contact" class="sidebar-link text-muted"><i class="o-imac-screen-1 mr-3 text-gray"></i><span>יצירת קשר</span></a></li>
         </ul>
       </div>
-      <div class="page-holder w-100 d-flex flex-wrap" style="vertical-align:center;margin:30px 255px">
+      
+      <div class="page-holder w-100 d-flex flex-wrap" style="vertical-align:center;margin:30px 225px">
         <div class="row">
           <div class="col-lg-10" style="vertical-align:center;margin:30px 110px; text-align:center;">
             <div id="content-formatting" class="card mb-4">
-              <div class="card-header"><b>Possibilities</b></div>
               <div class="card-body text-xl">
-                <a href="/StudyPlay/manageActivities">Manage activities</a><br><br>
-                <a href="/StudyPlay/get_new_workers_table">Add workers</a><br><br>
-                <a href="/StudyPlay/get_workers_table">Delete workers</a><br><br>
-                <a href="/StudyPlay/get_new_workers_table">Add Users</a><br><br>
-                <a href="/StudyPlay/get_parents_table">Get Parents</a><br><br>
-                <a href="/StudyPlay/get_child_FromP_table">Get children</a><br><br>
-                <a href="/StudyPlay/pie-chart">Chart of countries of all users</a><br><br>
-                <a href="/StudyPlay/getReviews">See reviews of users</a><br><br>
-                <form action="/StudyPlay/send_notification" method="post" target="_top">
-                  <input type="hidden" name="hosted_button_id" value="ZARGEF99Z3VUJ" />
-                  <input type="image" href="{%static 'admindesign/img/whatsapp.png' %}"border="0" width="50" height="50"  name="submit" title="-Talk to Us- " />
-                </form>
-                 <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=c7dabdfa68b08cb748092c7915c05a3f92c6d846'></script>
-                 <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/778346/t/2"></script>
-              </div>
-              </div>
+                <div class="card-body text-xl"> 
+                <form action="/StudyPlay/addReviews" method="POST"  id="login-form" class="form form-login" autocomplete="off" role="main">
+                    {% csrf_token %}
+                <fieldset>
+                    <label class="form-label" for="contact-symptom">Description</label>
+                    <textarea name='description' id='description' rows="6" cols="50" class="form-control required"></textarea>
+                </div>      
+                <label class="form-label" for="contact-symptom">Rating</label>
+                <select type="rating" id='ratings' name="ratings" class="form-control required">
+                    <option selected></option>
+                    <option> 0 </option>
+                    <option> 1 </option>
+                    <option> 2 </option>
+                    <option> 3 </option>
+                    <option> 4 </option>
+                    <option> 5 </option>
+                </select> 
+                </fieldset> 
+                <button type="submit" class="btn-signup">submit</button>     
+                </form>                            
+            </div>
         </div>
             <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
           </div>
@@ -132,40 +134,23 @@
         </footer>
       </div>
     </div>
-
-    <div id="popup1" class="overlay">
-      <div class="popup">
-        <h2>יצירת הודעות מתפרצות</h2>
-        <a class="close" href="#">&times;</a>
-        <div class="contact-form">
-          <form action="/StudyPlay/AdminDash" method="POST" id="popup-form" autocomplete="off">
-            {% csrf_token %}
-          <p text-align="rtl">נא לרשום את ההודעה כאן:</p>
-          <div>
-            <fieldset>
-              <input type="text" name="popup-msg" rows="6" class="form-control" id="popup-msg" placeholder="...ההודעה"></textarea>
-            </fieldset>
-          </div>
-          <div class="col-lg-12">
-            <fieldset>
-              <button type="submit" id="popup-submit" class="main-button">שליחה</button>
-            </fieldset>
-          </div>
-          </form>
-        </div>
-      </div>
-    </div>
     
     <!-- JavaScript files-->
-    <script src="{%static 'admindesign/vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{%static 'admindesign/vendor/popper.js/umd/popper.min.js' %}"></script>
-    <script src="{%static 'admindesign/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{%static 'admindesign/vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
-    <script src="{%static 'admindesign/vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{%static 'workerdesign/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{%static 'workerdesign/vendor/popper.js/umd/popper.min.js' %}"></script>
+    <script src="{%static 'workerdesign/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{%static 'workerdesign/vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
+    <script src="{%static 'workerdesign/vendor/chart.js/Chart.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="{%static 'admindesign/js/charts-home.js' %}"></script>
-    <script src="{%static 'admindesign/js/front.js' %}"></script>
-    
+    <script src="{%static 'workerdesign/js/charts-home.js' %}"></script>
+    <script src="{%static 'workerdesign/js/front.js' %}"></script>
   </body>
-
+  <style>
+      .btn-signup {
+	color: #5D93FF;
+	background: #fbfdff;
+	box-shadow: inset 0 0 0 2px #5D93FF;
+	transform: translateX(30%);
+    }
+  </style>
 </html>
