@@ -67,11 +67,15 @@
               <div class="dropdown-divider"></div><a href="#" class="dropdown-item text-center"><small class="font-weight-bold headings-font-family text-uppercase">ראה את כל ההתראות</small></a>
             </div>
           </li>
-          <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="{%static 'admindesign/img/AdminLogo.jpg'%}" alt="Jason Doe" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
-            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">שלום User</strong><small>מחובר\ת בתור עובד\ת מדינה</small></a>
+          {% for item in data %}
+          <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="/static/images/{{ item.profile_pic }}" alt="{{ item.Pseudo }}" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
+           
+            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">Hello {{ item.Pseudo }}  </strong></a>
               <div class="dropdown-divider"></div><a href="index" class="dropdown-item">יציאה</a>
             </div>
           </li>
+          {% endfor %}
+          
         </ul>
       </nav>
     </header>
@@ -104,6 +108,8 @@
                   {% endfor %}
                   <a href="/StudyPlay/indexLibrary">indexLibrary</a><br><br>  
                   <a href="/StudyPlay/changepassword">Change password</a><br><br> 
+                  <a href="/StudyPlay/changepseudo">Change Pseudo</a><br><br> 
+                  <a href="/StudyPlay/changepicture">Change Picture</a><br><br> 
                   <a href="/StudyPlay/make-donation">Make donation : </a><br><br>  
                 </div>
                 <form action="https://www.paypal.com/donate" method="post" target="_top">

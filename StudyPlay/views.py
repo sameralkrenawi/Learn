@@ -40,7 +40,10 @@ def WorkerDash(request):
     return render(request,'WorkerDashBoard/index.html')
 
 def contact(request):
-    return render(request,'AdminDashBoard/contact.html')
+    return render(request,'ParentsDashBoard/contact.html')
+
+def ParentsDashReturn(request): 
+    return render(request,'login.html')
 
 def InformClient(request):
     return render(request,'AdminDashBoard/sendemail.html')
@@ -49,16 +52,17 @@ def ParentsDash(request):
     result={
         'data': []
     }
-    cursor.execute("SELECT Pseudo,Password FROM parents")
+    cursor.execute("SELECT Pseudo,Password,profile_pic FROM parents")
     data = cursor.fetchall()
     if request.method=='POST':
         useridtest=request.POST.get('pseudo')
         passwordtest=request.POST.get('password')
         for item in data:
-            Pseudo,Password = item
+            Pseudo,Password,profile_pic = item
             if useridtest==Pseudo and passwordtest == Password:
                 result['data'].append({
                     'Pseudo':Pseudo,
+                    'profile_pic':profile_pic,
                     })
         print(result)
         return render(request, 'ParentsDashBoard/index.html',result)
@@ -82,6 +86,14 @@ def changepassword(request):
     #page to change password to all users
     return render(request, 'changepassword.html')
 
+def changepseudo(request):
+    #page to change password to all users
+    return render(request, 'changepseudo.html')
+
+def changepicture(request):
+    #page to change password to all users
+    return render(request, 'changepicture.html')
+
 def registerform(request):
     if request.method =='POST':
         saverecord=AdminModel()
@@ -89,6 +101,7 @@ def registerform(request):
         saverecord.Pseudo=request.POST.get('name')
         saverecord.Password=request.POST.get('password')
         saverecord.Email=request.POST.get('email')
+        saverecord.profile_pic=request.POST.get('profile_pic')
         saverecord.save()
         messages.success(request,'Register Success ')
     else:
@@ -100,13 +113,15 @@ def registerFormParents(request):
     data = cursor.fetchall()       
     if request.method =='POST':
         saverecord=ParentsModel()
+        saverecord.AdminId=request.POST.get('id')
         saverecord.Pseudo=request.POST.get("name")
         saverecord.Password=request.POST.get('password')  
         saverecord.Email=request.POST.get('email')
         saverecord.country=request.POST.get('country')
+        saverecord.profile_pic="profile1.png"
         for item in data:
-            id,username,password,email=item
-            if saverecord.Pseudo==username or saverecord.Email==email:
+            id,username,password,email,country,profile_pic=item
+            if saverecord.Pseudo==username and saverecord.Email==email:
                 return ErrorPage(request)
         saverecord.save()
     return MainDashBoard(request)
@@ -152,7 +167,7 @@ def sendemail(request):
         send_mail('Contact Form',
 		 message, 
 		 settings.EMAIL_HOST_USER,
-		 ['david.teboul.95@gmail.com'], 
+		 ['studyplaycontact@gmail.com'], 
 		 fail_silently=False)	
     return render(request, 'AdminDashBoard/contact.html')
 
@@ -166,7 +181,7 @@ def sendWhatss(request):
         send_mail('Contact Form',
 		 message, 
 		 settings.EMAIL_HOST_USER,
-		 ['david.teboul.95@gmail.com'], 
+		 ['studyplaycontact@gmail.com'], 
 		 fail_silently=False)	
     return render(request, 'AdminDashBoard/contact.html')
 
@@ -355,7 +370,7 @@ def after_approuval_child_insert(request):
         send_mail('Contact Form',
 		         'child add', 
 		         settings.EMAIL_HOST_USER,
-		         ['david.teboul.95@gmail.com'], 
+		         ['studyplaycontact@gmail.com'], 
 		        fail_silently=False)	
     else:
         messages.success(request,'Cant Add child')
@@ -418,12 +433,48 @@ def Deletechild(request):
                 send_mail('Contact Form',
 		         'child delete', 
 		         settings.EMAIL_HOST_USER,
-		         ['david.teboul.95@gmail.com'], 
+		         ['studyplaycontact@gmail.com'], 
 		         fail_silently=False)	
                 return get_child_table(request,ParentsPseudo)
-    else: 
-        messages.success(request,'Child Not find enter the details againe ')
-        return index(request)
+            else: 
+                messages.success(request,'Child Not find enter the details againe ')
+                return index(request)
+def CHANGE_PICTURE(request):
+    if request.method=='POST':
+        useridtest=request.POST.get('pseudo')
+        passwordcurrentpassword=request.POST.get('current_password')
+        passwordtest=request.POST.get('password')
+        cursor.execute("SELECT Pseudo,Password,profile_pic FROM Parents")
+        data = cursor.fetchall()    
+        flag=0
+        for item in data:
+            Pseudo,Password,profile_pic = item
+            if  Pseudo==useridtest and Password == passwordcurrentpassword :
+                cursor.execute("UPDATE `Parents` SET `profile_pic` = '%s' WHERE `Parents`.`Pseudo` = '%s';"%(passwordtest,useridtest))
+                db_connection.commit()
+                messages.success(request,'Picture Change')
+                return registration(request)  
+        cursor.execute("SELECT Pseudo,Password,profile_pic FROM child")
+        data = cursor.fetchall()    
+        for item in data:
+            Pseudo,Password,profile_pic = item
+            if Pseudo==useridtest and Password == passwordcurrentpassword :
+                cursor.execute("UPDATE `child` SET `profile_pic` = '%s' WHERE `child`.`Pseudo` = '%s';"%(passwordtest,useridtest))
+                db_connection.commit()
+                messages.success(request,'Picture Change')
+                return registration(request)  
+        cursor.execute("SELECT Pseudo,Password,profile_pic FROM workers")
+        data = cursor.fetchall()    
+        for item in data:
+            Pseudo,Password,profile_pic = item
+            if Pseudo==useridtest and Password == passwordcurrentpassword :
+                cursor.execute("UPDATE `workers` SET `profile_pic` = '%s' WHERE `workers`.`Pseudo` = '%s';"%(passwordtest,useridtest))
+                db_connection.commit()
+                messages.success(request,'Picture Change')
+                return registration(request)  
+        messages.error(request,'! הפרט ים שהוזנו לא נמצאים במערכת')   
+        return changepassword(request)
+
 
 def CHANGE_PASSWORD(request):
     if request.method=='POST':
@@ -457,6 +508,42 @@ def CHANGE_PASSWORD(request):
                 cursor.execute("UPDATE `workers` SET `Password` = '%s' WHERE `workers`.`Pseudo` = '%s';"%(passwordtest,useridtest))
                 db_connection.commit()
                 messages.success(request,'סיסמא הוחלפה בהצלחה')
+                return registration(request)  
+        messages.error(request,'! הפרט ים שהוזנו לא נמצאים במערכת')   
+        return changepassword(request)
+
+def CHANGE_PSEUDO(request):
+    if request.method=='POST':
+        useridtest=request.POST.get('pseudo')
+        passwordcurrentpassword=request.POST.get('current_password')
+        passwordtest=request.POST.get('password')
+        cursor.execute("SELECT Pseudo,Password FROM Parents")
+        data = cursor.fetchall()    
+        flag=0
+        for item in data:
+            Pseudo,Password = item
+            if  Pseudo==useridtest and Password == passwordcurrentpassword :
+                cursor.execute("UPDATE `Parents` SET `Pseudo` = '%s' WHERE `Parents`.`Pseudo` = '%s';"%(passwordtest,useridtest))
+                db_connection.commit()
+                messages.success(request,'Pseudo Change')
+                return registration(request)  
+        cursor.execute("SELECT Pseudo,Password FROM child")
+        data = cursor.fetchall()    
+        for item in data:
+            Pseudo,Password = item
+            if Pseudo==useridtest and Password == passwordcurrentpassword :
+                cursor.execute("UPDATE `child` SET `Pseudo` = '%s' WHERE `child`.`Pseudo` = '%s';"%(passwordtest,useridtest))
+                db_connection.commit()
+                messages.success(request,'Pseudo Change')
+                return registration(request)  
+        cursor.execute("SELECT Pseudo,Password FROM workers")
+        data = cursor.fetchall()    
+        for item in data:
+            Pseudo,Password = item
+            if Pseudo==useridtest and Password == passwordcurrentpassword :
+                cursor.execute("UPDATE `workers` SET `Pseudo` = '%s' WHERE `workers`.`Pseudo` = '%s';"%(passwordtest,useridtest))
+                db_connection.commit()
+                messages.success(request,'Pseudo Change')
                 return registration(request)  
         messages.error(request,'! הפרט ים שהוזנו לא נמצאים במערכת')   
         return changepassword(request)
