@@ -80,6 +80,9 @@ def ExerciceLecture(request):
 def ExercicePuzzle(request):
     return render(request,'ChildDashBoard/ExercicePuzzle.html')
 
+def ExerciseMemory(request):
+    return render(request,'ChildDashBoard/ExerciseMemory.html')
+
 def index(request):
     return render(request,'index.html')
 
