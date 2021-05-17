@@ -51,4 +51,5 @@ urlpatterns = [
     path('ActivityDash',views.ActivityDash),
     path('addReviews',views.addReviews),
     path('getReviews',views.getReviews),
+    path('getChildrenInformation',views.getChildrenInformation),
     ]

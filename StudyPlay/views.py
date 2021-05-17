@@ -125,6 +125,25 @@ def getReviews(request):
         print(result)
     return render(request,'AdminDashBoard/getReviews.html', result)
 
+def getChildrenInformation(request):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM child")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Pseudo,Password,Age,Email,ParentsPseudo = item
+        result['data'].append({
+            'ID':ID,
+            'Pseudo':Pseudo,
+            'Password':Password,
+            'Age':Age,
+            'Email':Email,
+            'ParentsPseudo':ParentsPseudo,
+        })
+        print(result)
+    return render(request,'ParentsDashBoard/getChildrenInformation.html', result)
+
 def registerform(request):
     if request.method =='POST':
         saverecord=AdminModel()
