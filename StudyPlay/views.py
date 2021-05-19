@@ -468,7 +468,7 @@ def get_new_child_table(request,userid):
     cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Age,Email,ParentsPseudo = item
+        ID,Pseudo,Password,Age,Email,profile_pic,ParentsPseudo = item
         if ParentsPseudo==userid:
             result['data'].append({
                 'ID':ID,
@@ -476,6 +476,7 @@ def get_new_child_table(request,userid):
                 'Password':Password,
                 'Age':Age,
                 'Email':Email,
+                'profile_pic':profile_pic,
                 'ParentsPseudo':ParentsPseudo,
             })
         print(result)
@@ -488,7 +489,7 @@ def get_child_table(request,userid):
     cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Age,Email,ParentsPseudo = item
+        ID,Pseudo,Password,Age,Email,profile_pic,ParentsPseudo = item
         if ParentsPseudo==userid:
             result['data'].append({
                 'ID':ID,
@@ -496,6 +497,7 @@ def get_child_table(request,userid):
                 'Password':Password,
                 'Age':Age,
                 'Email':Email,
+                'profile_pic':profile_pic,
                 'ParentsPseudo':ParentsPseudo,
             })
         print(result)
