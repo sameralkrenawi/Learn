@@ -104,6 +104,21 @@ def ActivityDash(request):
         print(result)
     return render(request,'ActivityDashBoard/index.html', result)
 
+def ActivityDashPost(request):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM child")
+    data = cursor.fetchall()
+    if request.method=='POST':
+         useridtest=request.POST.get('pseudo')
+         passwordtest=request.POST.get('password')
+         userid=useridtest
+    for item in data:    
+        Pseudo,Password= item
+        if useridtest==Pseudo and passwordtest == Password:
+             return ActivityDash(request)  
+
 def ExerciceLecture(request):
     return render(request,'ActivityDashBoard/ExerciceLecture.html')
 
