@@ -43,18 +43,20 @@
                 </div>
             </div>
         </div>
-        <div id="gameOver" style="display:none;">
-            <div style="background-color: #fc9e9e; padding: 5px 10px 20px 10px; text-align: center; ">
-                <h2 style="text-align:center">Game over !!</h2>
-                Congratulations!! <br /> You got the picture ready.
-                <br />
-                Time: <span class="stepCount">0</span> gear.
-                <br />
-                Time spent: <span class="timeCount">0</span> seconds<br />
-                <div>
-                    <button type="button" onclick="window.location.reload(true);">Play more</button>
-                </div>
+        <form action="/StudyPlay/ExercicePuzzle" method="POST" autocomplete="off" role="main"></form>
+            <div id="gameOver" style="display:none;">
+                <div style="background-color: #fc9e9e; padding: 5px 10px 20px 10px; text-align: center; ">
+                    <h2 style="text-align:center">Game over !!</h2>
+                    Congratulations!! <br /> You got the picture ready.
+                    <br />
+                    Time: <span class="stepCount">0</span> gear.
+                    <br />
+                    Time spent: <span class="timeCount">0</span> seconds<br />
+                    <div>
+                        <button type="button" onclick="window.location.reload(true);">Play more</button>
+                    </div>
             </div>
+        </form>
         </div>
 
         <script>

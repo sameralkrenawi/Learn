@@ -35,7 +35,23 @@ def MainDashBoard(request):
     return render(request, 'registrationform.html')
 
 def ChildDash(request):
-    return render(request, 'ChildDashBoard/index.html')
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT Pseudo,Password,profile_pic FROM child")
+    data = cursor.fetchall()
+    if request.method=='POST':
+        useridtest=request.POST.get('pseudo')
+        passwordtest=request.POST.get('password')
+        for item in data:
+            Pseudo,Password,profile_pic = item
+            if useridtest==Pseudo and passwordtest == Password:
+                result['data'].append({
+                    'Pseudo':Pseudo,
+                    'profile_pic':profile_pic,
+                    })
+        print(result)
+        return render(request, 'ChildDashBoard/index.html',result)
 
 def WorkerDash(request):
     return render(request,'WorkerDashBoard/index.html')
@@ -72,7 +88,23 @@ def AdminDash(request):
     return render(request,'AdminDashBoard/index.html')
 
 def ActivityDash(request):
-    return render(request,'ChildDashBoard/ActivityDash.html')  
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT Pseudo,Password,profile_pic FROM child")
+    data = cursor.fetchall()
+    if request.method=='POST':
+        useridtest=request.POST.get('pseudo')
+        passwordtest=request.POST.get('password')
+        for item in data:
+            Pseudo,Password,profile_pic = item
+            if useridtest==Pseudo and passwordtest == Password:
+                result['data'].append({
+                    'Pseudo':Pseudo,
+                    'profile_pic':profile_pic,
+                    })
+        print(result)
+        return render(request, 'ActivityDashBoard/index.html',result)
 
 def ExerciceLecture(request):
     return render(request,'ChildDashBoard/ExerciceLecture.html')
@@ -381,7 +413,7 @@ def AddActivity(request):
     if request.method =='POST':
         saverecord=ActivitiesModel()
         """saverecord.ID=request.POST.get('id')"""
-        saverecord.Name=request.POST.get("name")
+        saverecord.Name=request.POST.get('name')
         saverecord.Subject=request.POST.get('subject')
         for item in data:
             name,subject=item
@@ -392,20 +424,21 @@ def AddActivity(request):
 
 def DeleteActivity(request):
     if request.method=='POST':
-        activityID=request.POST.get('id')
+        activityIDs=request.POST.get('id')
+        activityID=int(activityIDs)
+        activityName=request.POST.get('name')
         result = []
-        cursor.execute("SELECT ID FROM activities")
+        cursor.execute("SELECT ID,Name FROM activities")
         data = cursor.fetchall()    
         for item in data:
-            ID = item
-            if ID == activityID:
-                cursor.execute("DELETE FROM activities WHERE ID = '%s';"%(ID))
+            ID,Name = item
+            if ID == activityID and Name==activityName:
+                cursor.execute("DELETE FROM activities WHERE activities.ID = '%s';"%(ID))
                 db_connection.commit()
                 messages.success(request,'Activity was deleted to system')
                 return ManageActivities(request)
-            else: 
-                messages.success(request,'Activity doesnt exist in the system ')
-                return ManageActivities(request)
+        messages.success(request,'Activity doesnt exist in the system ')
+        return AdminDash(request)
 
 
 def after_approuval_child_insert(request):
@@ -490,6 +523,7 @@ def Deletechild(request):
             else: 
                 messages.success(request,'Child Not find enter the details againe ')
                 return index(request)
+
 def CHANGE_PICTURE(request):
     if request.method=='POST':
         useridtest=request.POST.get('pseudo')
@@ -525,7 +559,6 @@ def CHANGE_PICTURE(request):
                 return registration(request)  
         messages.error(request,'! הפרט ים שהוזנו לא נמצאים במערכת')   
         return changepassword(request)
-
 
 def CHANGE_PASSWORD(request):
     if request.method=='POST':
@@ -626,7 +659,7 @@ def get_child_connection(request,userid):
     cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Age,Email,ParentsPseudo = item
+        ID,Pseudo,Password,Age,Email,profile_pic,ParentsPseudo = item
         if ParentsPseudo==userid:
             result['data'].append({
                 'ID':ID,
@@ -634,6 +667,7 @@ def get_child_connection(request,userid):
                 'Password':Password,
                 'Age':Age,
                 'Email':Email,
+                'profile_pic':profile_pic,
                 'ParentsPseudo':ParentsPseudo,
             })
         print(result)
@@ -655,7 +689,7 @@ def pie_chart(request):
 
 
 def send_notification(request):
-    client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+    """client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
     if request.method == 'POST':
         user_whatsapp_number = request.POST['user_number']
         message = client.messages.create(
@@ -667,5 +701,5 @@ def send_notification(request):
         )
         print(user_whatsapp_number)
         print(message.sid)
-        return HttpResponse('Great! Expect a message...')
+        return HttpResponse('Great! Expect a message...')"""
     return render(request, 'phone.html')

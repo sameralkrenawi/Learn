@@ -59,13 +59,15 @@
       </div>
       <div class="input-block">
         <form action="/StudyPlay/deleteActivity" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
-          <fieldset>
             {% csrf_token %}
-              <legend>אינה הכניס את ת"ז שם וסמסמא כדאי להרשם</legend>
               <div class="input-block">
                 <label for="id">ID</label>
-                <input type="text" id="id" name="id" placeholder="Put id...">
+                <input type="name" id='id' name='id' placeholder="Put id...">
               </div> 
+              <div class="input-block">
+                <label for="name">Name</label>
+                <input type="name" id="name" name="name" placeholder="Put name... " class="form-control required">
+            </div>
             <button id="login-submit">submit</button> 
           </form>
         </div>
