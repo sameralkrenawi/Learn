@@ -55,6 +55,7 @@ class ActivitiesModel(models.Model):
     ID = models.IntegerField(db_column='ID',primary_key=True) 
     Name = models.CharField(db_column='Name',max_length=100)
     Subject = models.CharField(db_column='Subject',max_length=100)
+    Link = models.CharField(db_column='Link',max_length=100)
     class Meta:
         managed = True
         db_table = 'activities'

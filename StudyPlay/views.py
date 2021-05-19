@@ -34,7 +34,7 @@ def registration(request):
 def MainDashBoard(request):
     return render(request, 'registrationform.html')
 
-def ChildDash(request):
+def ChildDash(request,userid):
     result={
         'data': []
     }
@@ -91,29 +91,27 @@ def ActivityDash(request):
     result={
         'data': []
     }
-    cursor.execute("SELECT Pseudo,Password,profile_pic FROM child")
+    cursor.execute("SELECT * FROM activities")
     data = cursor.fetchall()
-    if request.method=='POST':
-        useridtest=request.POST.get('pseudo')
-        passwordtest=request.POST.get('password')
-        for item in data:
-            Pseudo,Password,profile_pic = item
-            if useridtest==Pseudo and passwordtest == Password:
-                result['data'].append({
-                    'Pseudo':Pseudo,
-                    'profile_pic':profile_pic,
-                    })
+    for item in data:
+        ID,Name,Subject,Link = item
+        result['data'].append({
+            'ID':ID,
+            'Name':Name,
+            'Subject':Subject,
+            'Link':Link,
+        })
         print(result)
-        return render(request, 'ActivityDashBoard/index.html',result)
+    return render(request,'ActivityDashBoard/index.html', result)
 
 def ExerciceLecture(request):
-    return render(request,'ChildDashBoard/ExerciceLecture.html')
+    return render(request,'ActivityDashBoard/ExerciceLecture.html')
 
 def ExercicePuzzle(request):
-    return render(request,'ChildDashBoard/ExercicePuzzle.html')
+    return render(request,'ActivityDashBoard/ExercicePuzzle.html')
 
 def ExerciseMemory(request):
-    return render(request,'ChildDashBoard/ExerciseMemory.html')
+    return render(request,'ActivityDashBoard/ExerciseMemory.html')
 
 def index(request):
     return render(request,'index.html')
@@ -177,26 +175,31 @@ def getChildrenInformation(request):
     return render(request,'ParentsDashBoard/getChildrenInformation.html', result)
 
 def registerform(request):
+    cursor.execute("SELECT * FROM admin")
+    data = cursor.fetchall()
     if request.method =='POST':
+        userID=request.POST.get('name')
+        userEmail=request.POST.get('email')
         saverecord=AdminModel()
-        saverecord.AdminId=request.POST.get('id')
+        saverecord.Adminid=request.POST.get('id')
         saverecord.Pseudo=request.POST.get('name')
         saverecord.Password=request.POST.get('password')
         saverecord.Email=request.POST.get('email')
-        saverecord.profile_pic=request.POST.get('profile_pic')
+        for item in data:
+            ID,adminID,username,password,email=item
+            if userID==username or userEmail==email:
+                return ErrorPage(request)
         saverecord.save()
-        messages.success(request,'Register Success ')
-    else:
-        return registerFormParents(request)    
+        messages.success(request,'Register Success ')   
     return MainDashBoard(request)
 
 def registerFormParents(request):    
     cursor.execute("SELECT * FROM Parents")
     data = cursor.fetchall()       
     if request.method =='POST':
+        userID=request.POST.get('name')
+        userEmail=request.POST.get('email')
         saverecord=ParentsModel()
-        saverecord.AdminId=request.POST.get('id')
-        saverecord.Pseudo=request.POST.get("name")
         saverecord.Pseudo=request.POST.get('name')
         saverecord.Password=request.POST.get('password')  
         saverecord.Email=request.POST.get('email')
@@ -204,24 +207,27 @@ def registerFormParents(request):
         saverecord.profile_pic="profile1.png"
         for item in data:
             id,username,password,email,country,profile_pic=item
-            if saverecord.Pseudo==username and saverecord.Email==email:
+            if userID==username and userEmail==email:
                 return ErrorPage(request)
         saverecord.save()
     return MainDashBoard(request)
 
 def registerFormChild(request):
-    cursor.execute("SELECT FROM child")
+    cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()
     if request.method =='POST':
+        userID=request.POST.get('name')
+        userEmail=request.POST.get('email')
         saverecord=ChildModel()
         saverecord.Pseudo=request.POST.get("name")
         saverecord.Password=request.POST.get('password')
         saverecord.Age=request.POST.get("age")
         saverecord.Email=request.POST.get('email')
+        saverecord.profile_pic="profile1.png"
         saverecord.ParentsPseudo=request.POST.get('pseudo')
         for item in data:
-            username,email=item
-            if saverecord.Pseudo==username or saverecord.Email==email:
+            username,password,age,email,profile_pic,ParentsPseudo=item
+            if userID==username or userEmail==email:
                 return ErrorPage(request)
         saverecord.save()
     return MainDashBoard(request)
@@ -230,13 +236,21 @@ def ErrorPage(request):
     return render(request,'ErrorPage.html')
 
 def after_approuval_worker_insert(request):
+    cursor.execute("SELECT * FROM workers")
+    data = cursor.fetchall()
     if request.method=='POST':
+        userID=request.POST.get('name')
+        userEmail=request.POST.get('email')
         saverecord=WorkersModel()
         saverecord.Workerid=request.POST.get('id')
         saverecord.Pseudo=request.POST.get('name')
         saverecord.Password=request.POST.get('password')
         saverecord.Email=request.POST.get('email')
         saverecord.type=request.POST.get('type')
+        for item in data:
+            id,workerid,username,password,email,type=item
+            if userID==username or userEmail==email:
+                return ErrorPage(request)
         saverecord.save()
         messages.success(request,'Worker Add ')
     else:
@@ -356,7 +370,7 @@ def login(request):
     for item in data:    
         Pseudo,Password= item
         if useridtest==Pseudo and passwordtest == Password:
-             return ChildDash(request)    
+             return ChildDash(request,userid)    
     cursor.execute("SELECT Pseudo,Password FROM Parents")
     data = cursor.fetchall()
     for item in data:    
@@ -398,11 +412,12 @@ def ManageActivities(request):
     cursor.execute("SELECT * FROM activities")
     data = cursor.fetchall()
     for item in data:
-        ID,Name,Subject = item
+        ID,Name,Subject,Link = item
         result['data'].append({
             'ID':ID,
             'Name':Name,
             'Subject':Subject,
+            'Link':Link,
         })
         print(result)
     return render(request,'AdminDashBoard/manageActivities.html', result)
@@ -415,12 +430,13 @@ def AddActivity(request):
         """saverecord.ID=request.POST.get('id')"""
         saverecord.Name=request.POST.get('name')
         saverecord.Subject=request.POST.get('subject')
+        saverecord.Link='/StudyPlay/Ex'+request.POST.get('name')
         for item in data:
             name,subject=item
             if saverecord.Name==name and saverecord.Subject==subject:
                 return ErrorPage(request)
         saverecord.save()
-    return ManageActivities(request)
+        return ManageActivities(request)
 
 def DeleteActivity(request):
     if request.method=='POST':
@@ -442,13 +458,23 @@ def DeleteActivity(request):
 
 
 def after_approuval_child_insert(request):
+    cursor.execute("SELECT * FROM child")
+    data = cursor.fetchall()  
     if request.method=='POST':
+        userPseudo=request.POST.get('pseudo')
+        userPseudoP=request.POST.get('pseudoP')
         saverecord=ChildModel()
-        saverecord.Pseudo=request.POST.get('name')
+        saverecord.Pseudo=request.POST.get('pseudo')
         saverecord.Password=request.POST.get('password')
         saverecord.Age=request.POST.get('age')
         saverecord.Email=request.POST.get('email')
-        saverecord.ParentsPseudo=request.POST.get('pseudo')
+        saverecord.profile_pic="profile1.png"
+        saverecord.ParentsPseudo=request.POST.get('pseudoP')
+        for item in data:
+            id,pseudo,password,age,email,profile_pic,pseudoP=item
+            if userPseudoP==pseudoP:
+                if userPseudo==pseudo:
+                    return ErrorPage(request)
         saverecord.save()
         messages.success(request,'Child Add ')
         send_mail('Contact Form',
@@ -456,10 +482,9 @@ def after_approuval_child_insert(request):
 		         settings.EMAIL_HOST_USER,
 		         ['studyplaycontact@gmail.com'], 
 		        fail_silently=False)	
-    else:
-        messages.success(request,'Cant Add child')
-        return ParentsDash(request)    
-    return get_new_child_table(request,request.POST.get('pseudo'))          
+        return get_new_child_table(request,request.POST.get('pseudo'))    
+    messages.success(request,'Cant Add child')
+    return ParentsDash(request)            
 
 def get_new_child_table(request,userid):
     result={
@@ -505,14 +530,13 @@ def get_child_table(request,userid):
 
 def Deletechild(request):
     if request.method=='POST':
-        childname=request.POST.get('name')
-        Parentname=request.POST.get('pseudo')
+        childPseudo=request.POST.get('pseudo')
         result = []
         cursor.execute("SELECT * FROM child")
         data = cursor.fetchall()    
         for item in data:
-            ID,Pseudo,Password,Age,Email,ParentsPseudo= item
-            if (Pseudo == childname and Parentname == ParentsPseudo)  :
+            ID,Pseudo,Password,Age,Email,Link,ParentsPseudo= item
+            if (Pseudo == childPseudo):
                 cursor.execute("DELETE FROM child WHERE child.ID = '%s';"%(ID))
                 db_connection.commit()
                 messages.success(request,'Child Delete ')
@@ -521,10 +545,9 @@ def Deletechild(request):
 		         settings.EMAIL_HOST_USER,
 		         ['studyplaycontact@gmail.com'], 
 		         fail_silently=False)	
-                return get_child_table(request,ParentsPseudo)
-            else: 
-                messages.success(request,'Child Not find enter the details againe ')
-                return index(request)
+                return get_child_table(request,ParentsPseudo) 
+        messages.success(request,'Child Not find enter the details again ')
+        return ParentsDash(request)
 
 def CHANGE_PICTURE(request):
     if request.method=='POST':
