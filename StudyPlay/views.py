@@ -87,12 +87,18 @@ def ParentsDash(request):
 def AdminDash(request):
     return render(request,'AdminDashBoard/index.html')
 
-def ActivityDash(request):
+def ActivityDash(request,userid):
     result={
         'data': []
     }
+
+    result1={
+        'data1': []
+    }
     cursor.execute("SELECT * FROM activities")
     data = cursor.fetchall()
+    cursor.execute("SELECT Pseudo,profile_pic FROM child")
+    data1 = cursor.fetchall()
     for item in data:
         ID,Name,Subject,Link = item
         result['data'].append({
@@ -101,8 +107,15 @@ def ActivityDash(request):
             'Subject':Subject,
             'Link':Link,
         })
-        print(result)
-    return render(request,'ActivityDashBoard/index.html', result)
+    for item in data1:
+        Pseudo,profile_pic=item
+        if(Pseudo==userid):
+            result1['data1'].append({
+                'Pseudo':Pseudo,
+                'profile_pic':profile_pic,
+            })
+    print(result)
+    return render(request,'ActivityDashBoard/index.html', result,result1)
 
 def ActivityDashPost(request):
     result={

@@ -101,7 +101,9 @@
             <div id="content-formatting" class="card mb-4">
               <div class="card-header"><b>Possibilities</b></div>
               <div class="card-body text-xl">
-                <a href="/StudyPlay/ActivityDash">Activities</a><br><br>
+              {% for item in data %}
+                <a href="/StudyPlay/ActivityDash/{{item.Pseudo}}">Activities</a><br><br>
+              {% endfor %}
                 <a href="/StudyPlay/changepassword">Change password</a><br><br>
                 <a href="/StudyPlay/changepicture">Change Picture</a><br><br> 
                 <a href="#"></a><br>

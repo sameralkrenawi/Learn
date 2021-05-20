@@ -48,7 +48,7 @@ urlpatterns = [
     path('ExLecture', views.ExerciceLecture),
     path('ExPuzzle', views.ExercicePuzzle),
     path('ExMemory', views.ExerciseMemory),
-    path('ActivityDash', views.ActivityDash),
+    path('ActivityDash/<str:userid>/', views.ActivityDash),
     path('addReviews', views.addReviews),
     path('getReviews', views.getReviews),
     path('getChildrenInformation', views.getChildrenInformation),
