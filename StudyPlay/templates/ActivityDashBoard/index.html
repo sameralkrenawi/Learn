@@ -75,7 +75,7 @@
               <div class="dropdown-divider"></div><a href="#" class="dropdown-item text-center"><small class="font-weight-bold headings-font-family text-uppercase">ראה את כל ההתראות</small></a>
             </div>
           </li>
-          {% for item in data %}
+          {% for item in data1 %}
           <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="/static/images/{{ item.profile_pic }}" alt="{{ item.Pseudo }}" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
             <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">Hello {{ item.Pseudo }}</strong><small>מחובר\ת בתור עובד\ת מדינה</small></a>
               <div class="dropdown-divider"></div><a href="registerform" class="dropdown-item">Exit</a>
