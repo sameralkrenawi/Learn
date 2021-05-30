@@ -87,7 +87,22 @@ def ParentsDash(request):
         return render(request, 'ParentsDashBoard/index.html',result)
 
 def AdminDash(request):
-    return render(request,'AdminDashBoard/index.html')
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT Pseudo,Password FROM admin")
+    data = cursor.fetchall()
+    if request.method=='POST':
+        useridtest=request.POST.get('pseudo')
+        passwordtest=request.POST.get('password')
+        for item in data:
+            Pseudo,Password = item
+            if useridtest==Pseudo and passwordtest == Password:
+                result['data'].append({
+                    'Pseudo':Pseudo,
+                    })
+        print(result)
+        return render(request, 'AdminDashBoard/index.html',result)
 
 def ActivityDash(request,userid):
     result={'data': [], 
