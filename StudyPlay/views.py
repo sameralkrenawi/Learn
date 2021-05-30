@@ -9,10 +9,12 @@ from StudyPlay.models import ParentsModel
 from StudyPlay.models import ActivitiesModel
 from StudyPlay.models import CountriesModel
 from StudyPlay.models import ReviewsModel
+from StudyPlay.models import ActivityDoneModel
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
+
 
 import mysql.connector
 # Create your views here.
@@ -88,7 +90,8 @@ def AdminDash(request):
     return render(request,'AdminDashBoard/index.html')
 
 def ActivityDash(request,userid):
-    result={'data': [], 'data1' : []}
+    result={'data': [], 
+            'data1' : [] }
 
     cursor.execute("SELECT * FROM activities")
     data = cursor.fetchall()
@@ -100,7 +103,7 @@ def ActivityDash(request,userid):
             'ID':ID,
             'Name':Name,
             'Subject':Subject,
-            'Link':Link,
+            'Link':Link+'/'+userid,
         })
     for item in data1:
         Pseudo,profile_pic=item
@@ -112,29 +115,27 @@ def ActivityDash(request,userid):
     print(result)
     return render(request,'ActivityDashBoard/index.html', result)
 
-def ActivityDashPost(request):
-    result={
-        'data': []
-    }
-    cursor.execute("SELECT * FROM child")
-    data = cursor.fetchall()
-    if request.method=='POST':
-         useridtest=request.POST.get('pseudo')
-         passwordtest=request.POST.get('password')
-         userid=useridtest
-    for item in data:    
-        Pseudo,Password= item
-        if useridtest==Pseudo and passwordtest == Password:
-             return ActivityDash(request)  
 
 def ExerciceLecture(request):
     return render(request,'ActivityDashBoard/ExerciceLecture.html')
 
-def ExercicePuzzle(request):
+def ExercicePuzzle(request,userid):
     return render(request,'ActivityDashBoard/ExercicePuzzle.html')
 
 def ExerciseMemory(request):
-    return render(request,'ActivityDashBoard/ExerciseMemory.html')
+        return render(request,'ActivityDashBoard/ExerciseMemory.html')    
+    
+def AddGrades(request,userid): 
+    if request.method =='POST':
+        saverecord=ActivityDoneModel()
+        saverecord.NameAct=request.POST.get('name')
+        saverecord.PseudoC=userid
+        ###saverecord.PseudoP=None
+        saverecord.Grade=100
+        saverecord.save() 
+        return ActivityDash(request)
+    else:
+        return render(request,"ActivityDashBoard/index.html")
 
 def index(request):
     return render(request,'index.html')

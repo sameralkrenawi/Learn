@@ -178,3 +178,15 @@
   };
 
 })(MemoryGame);
+
+$( document ).ready(function() {
+  function onchange (evt) {
+    $.ajax({
+      url: '/AddGrades/',
+      data: {'score': score},
+      type: 'POST'
+    }).done(function(response){
+      console.log(response);
+    });
+ }
+});

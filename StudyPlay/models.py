@@ -75,3 +75,13 @@ class ReviewsModel(models.Model):
     class Meta:
         managed= True
         db_table='reviews'
+
+class ActivityDoneModel(models.Model):
+    ID = models.IntegerField(db_column='ID',primary_key=True) 
+    NameAct = models.CharField(db_column='NameAct',max_length=100)
+    PseudoC = models.CharField(db_column='PseudoC',max_length=100)
+    PseudoP = models.CharField(db_column='PseudoP',max_length=100)
+    Grade = models.CharField(db_column='Grade',max_length=100)
+    class Meta:
+        managed= True
+        db_table='activityDone'

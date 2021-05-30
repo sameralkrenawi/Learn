@@ -46,7 +46,10 @@
     </section>
     <section class="memory--menu-bar">
       <div class="inner">
-        <div class="left"><h1 class="memory--app-name">Fruit Matcher</h1></div>
+      <form action="/StudyPlay/AddGrades" method="POST" autocomplete="off" role="main">
+        {% csrf_token %}
+        <input id="memory--settings-reset" type="submit" value="Return to menu" />
+      </form>
         <div class="right"><a href="#settings"><img id="memory--settings-icon" src="{%static 'childDesign/images/gear.png' %}" /></a></div>
       </div>
     </section>

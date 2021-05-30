@@ -46,10 +46,11 @@ urlpatterns = [
     path('deleteActivity', views.DeleteActivity, name="DeleteActivity"),
     path('pie-chart', views.pie_chart),
     path('ExLecture', views.ExerciceLecture),
-    path('ExPuzzle', views.ExercicePuzzle),
+    path('ExPuzzle/<str:userid>/', views.ExercicePuzzle),
     path('ExMemory', views.ExerciseMemory),
     path('ActivityDash/<str:userid>/', views.ActivityDash),
     path('addReviews', views.addReviews),
     path('getReviews', views.getReviews),
     path('getChildrenInformation', views.getChildrenInformation),
+    path('AddGrades',views.AddGrades),
 ]
