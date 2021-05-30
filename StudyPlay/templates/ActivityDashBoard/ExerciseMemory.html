@@ -16,8 +16,35 @@
     <script src="{%static 'childDesign/memory/MemoryGame.js' %}"></script>
     <script src="{%static 'childDesign/memory/Card.js' %}"></script>
     <link href="{%static 'childDesign/css/MemoryGame.css' %}" rel="stylesheet" />
+	
+	<!-- selected fonts-US91-JAVASCRIPT -->
+	<script>
+	<!-- US91- change fonts by user   -->
+	function changeFont(font) {
+		document.getElementById("Body").style.fontFamily = font.value;
+	}
+	
+		<!-- zoom-in zoom-out functions  US37-->
+	function zoomIn()
+		{
+			var Page = document.getElementById('Body');
+			var zoom = parseInt(Page.style.zoom) + 10 +'%'
+			Page.style.zoom = zoom;
+			return false;
+		}
+ 
+	function zoomOut()
+		{
+			var Page = document.getElementById('Body');
+			var zoom = parseInt(Page.style.zoom) - 10 +'%'
+			Page.style.zoom = zoom;
+			return false;
+		}
+	
+	</script>
+	
 </head>
-<body>
+<body  runat="server" id="Body" style="zoom: 100%" contenteditable="true"  > <!-- is for the select font part : contenteditable="true" id="note_header" -->
     <section id="memory--settings-modal" class="valign-table modal show">
       <div class="valign-cell">
         <form>
@@ -54,5 +81,34 @@
       </div>
     </section>
     <script src="{%static 'childDesign/memory/BrowserInterface.js' %}"></script>
+	
+	<br>
+
+	<!--zoom in zoom out buttons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+	<a class="btn zoom" id="zoom" onclick="zoomIn()" style="bottom: 190px; background: #eef; "><i class="fas fa-search-plus"></i></a>
+	<a class="btn zoom-out" id="zoom-out" onclick="zoomOut()" style="bottom: 1920px; background: #eef; "><i class="fas fa-search-minus"></i></a>
+    <!-- end of zoom in zoom out button -->
+	
+<!-- select the font you want to change          
+        ,alert('the font has been changed') is to send message to the client the the font has been changed         -->
+<select id="select_font" onchange="changeFont(this),alert('the font has been changed');" >
+            <option value="Arial">Arial</option>
+            <option value="Sans Serif" selected>Sans Serif</option>
+            <option value="Comic Sans MS">Comic Sans MS</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Trebuchet MS">Trebuchet MS</option>
+            <option value="Arial Black">Arial Black</option>
+            <option value="Impact">Impact</option>
+            <option value="Bookman">Bookman</option>
+            <option value="Garamond">Garamond</option>
+            <option value="Palatino">Palatino</option>
+            <option value="Georgia">Georgia</option>
+        </select>
+		</br>
+		<br> </br>
+		
   </body>
 </html>
