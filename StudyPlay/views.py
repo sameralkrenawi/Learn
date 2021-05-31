@@ -131,19 +131,43 @@ def ActivityDash(request,userid):
     return render(request,'ActivityDashBoard/index.html', result)
 
 
-def ExerciceLecture(request):
+def ExerciceLecture(request,userid):
     return render(request,'ActivityDashBoard/ExerciceLecture.html')
 
 def ExercicePuzzle(request,userid):
     return render(request,'ActivityDashBoard/ExercicePuzzle.html')
 
-def ExerciseMemory(request):
-        return render(request,'ActivityDashBoard/ExerciseMemory.html')    
+def ExerciseMemory(request,userid):
+    return render(request,'ActivityDashBoard/ExerciseMemory.html')    
     
+def getActivityDone(request,userid):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM activities")
+    data = cursor.fetchall()
+    cursor.execute("SELECT Pseudo FROM child")
+    data1 = cursor.fetchall()
+    for item in data:
+        ID,Name,Subject,Link = item
+        if Name=="Memory":
+            result['data'].append({
+                'ID':ID,
+                'Name':Name,
+            })
+    for item in data1:
+        Pseudo=item
+        if(Pseudo==userid):
+            result['data1'].append({
+                'Pseudo':Pseudo,
+            })
+    return render(request,'ActivityDashBoard/getActivityDone.html',result)  
+        
+
 def AddGrades(request,userid): 
     if request.method =='POST':
         saverecord=ActivityDoneModel()
-        saverecord.NameAct=request.POST.get('name')
+        saverecord.NameAct='Memory'
         saverecord.PseudoC=userid
         ###saverecord.PseudoP=None
         saverecord.Grade=100
