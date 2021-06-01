@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('Test', views.MainDashBoard, name='main'),
-    path('registerform', views.registerform),
+    path('registerform', views.registerform, name='registerform'),
     path('registerformchild', views.registerFormChild),
     path('registerformparents', views.registerFormParents),
     path('ErrorPage', views.ErrorPage, name="ErrorPage"),
@@ -38,6 +38,7 @@ urlpatterns = [
     path('get_new_workers_table', views.get_new_workers_table),
     path('AdminDash', views.AdminDash),
     path('ChildDash', views.ChildDash),
+    path('ExLecture/<str:userid>/ChildDash', views.ChildDash),
     path('ParentsDash', views.ParentsDash),
     path('ParentsDashReturn', views.ParentsDashReturn),
     path('WorkerDash', views.WorkerDash, name='WorkerDash'),
@@ -54,4 +55,7 @@ urlpatterns = [
     path('getChildrenInformation', views.getChildrenInformation),
     path('AddGrades/<str:userid>/',views.AddGrades),
     path('getActivityDone',views.getActivityDone),
+    path('ExMemory/<str:userid>/getActivityDone/<str:nameAct>/',views.getActivityDone),
+    path('ExPuzzle/<str:userid>/getActivityDone/<str:nameAct>/',views.getActivityDone),
+    path('ExLecture/<str:userid>/getActivityDone/<str:nameAct>/',views.getActivityDone),
 ]

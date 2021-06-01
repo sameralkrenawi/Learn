@@ -67,9 +67,8 @@
                 </div>
             </div>
         </div>
-        <form action="/StudyPlay/AddGrades" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
-            {% csrf_token %}
             <div id="gameOver" style="display:none;">
+            <form action="getActivityDone/Puzzle" method="get">
                 <div style="background-color: #fc9e9e; padding: 5px 10px 20px 10px; text-align: center; ">
                     <h2 style="text-align:center">Game over !!</h2>
                     Congratulations!! <br /> You got the picture ready.
@@ -77,13 +76,13 @@
                     Time: <span class="stepCount">0</span> gear.
                     <br />
                     Time spent: <span class="timeCount">0</span> seconds<br />
-                    <label for="name">Puzzle</label>
                     <br />
-                    <div class="form-element">
-                        <input type="submit" value='Submit'>
-                    </form>
+                    <div>
+                        <button type="submit" formaction="getActivityDone/Puzzle" >Show result</button>
+                    </div>
                     </div>
                 </div>
+            </form>
             </div>
 
         <script>

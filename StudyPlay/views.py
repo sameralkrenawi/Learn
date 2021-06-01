@@ -14,9 +14,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
-
-
 import mysql.connector
+import random
+
 # Create your views here.
 global userid 
 
@@ -45,15 +45,15 @@ def ChildDash(request,userid):
     if request.method=='POST':
         useridtest=request.POST.get('pseudo')
         passwordtest=request.POST.get('password')
-        for item in data:
-            Pseudo,Password,profile_pic = item
-            if useridtest==Pseudo and passwordtest == Password:
-                result['data'].append({
-                    'Pseudo':Pseudo,
-                    'profile_pic':profile_pic,
-                    })
-        print(result)
-        return render(request, 'ChildDashBoard/index.html',result)
+    for item in data:
+        Pseudo,Password,profile_pic = item
+        if Pseudo==userid:
+            result['data'].append({
+                'Pseudo':Pseudo,
+                'profile_pic':profile_pic,
+            })
+    print(result)
+    return render(request, 'ChildDashBoard/index.html',result)
 
 def WorkerDash(request):
     return render(request,'WorkerDashBoard/index.html')
@@ -106,20 +106,24 @@ def AdminDash(request):
 
 def ActivityDash(request,userid):
     result={'data': [], 
-            'data1' : [] }
+            'data1' : [],
+            'data2' : [] }
 
     cursor.execute("SELECT * FROM activities")
     data = cursor.fetchall()
     cursor.execute("SELECT Pseudo,profile_pic FROM child")
     data1 = cursor.fetchall()
+    cursor.execute("SELECT ID,Name FROM activities")
+    data2 = cursor.fetchall()
     for item in data:
         ID,Name,Subject,Link = item
-        result['data'].append({
-            'ID':ID,
-            'Name':Name,
-            'Subject':Subject,
-            'Link':Link+'/'+userid,
-        })
+        if Name!='Lecture':
+            result['data'].append({
+                'ID':ID,
+                'Name':Name,
+                'Subject':Subject,
+                'Link':Link+'/'+userid,
+            })
     for item in data1:
         Pseudo,profile_pic=item
         if(Pseudo==userid):
@@ -127,6 +131,15 @@ def ActivityDash(request,userid):
                 'Pseudo':Pseudo,
                 'profile_pic':profile_pic,
             })
+    for item in data2:
+        ID,Name=item
+        if Name=='Lecture':
+             result['data2'].append({
+                'ID':ID,
+                'Name':Name,
+                'Subject':Subject,
+                'Link':Link+'/'+userid,
+             })
     print(result)
     return render(request,'ActivityDashBoard/index.html', result)
 
@@ -140,41 +153,43 @@ def ExercicePuzzle(request,userid):
 def ExerciseMemory(request,userid):
     return render(request,'ActivityDashBoard/ExerciseMemory.html')    
     
-def getActivityDone(request,userid):
-    result={
-        'data': []
-    }
-    cursor.execute("SELECT * FROM activities")
+def getActivityDone(request,nameAct,userid):
+    result={'data': [], 
+            'data1' : [] 
+            }
+    cursor.execute("SELECT ID,Name FROM activities")
     data = cursor.fetchall()
-    cursor.execute("SELECT Pseudo FROM child")
+    cursor.execute("SELECT Pseudo,ParentsPseudo FROM child")
     data1 = cursor.fetchall()
     for item in data:
-        ID,Name,Subject,Link = item
-        if Name=="Memory":
+        ID,Name = item
+        if Name==nameAct:
             result['data'].append({
                 'ID':ID,
                 'Name':Name,
+                'UserID':userid,
             })
     for item in data1:
-        Pseudo=item
-        if(Pseudo==userid):
+        Pseudo,ParentsPseudo=item
+        if Pseudo==userid:
             result['data1'].append({
                 'Pseudo':Pseudo,
+                'ParentsPseudo':ParentsPseudo,
+                'Grade':random.randint(75,100)
             })
+    print(result)
     return render(request,'ActivityDashBoard/getActivityDone.html',result)  
         
 
 def AddGrades(request,userid): 
     if request.method =='POST':
         saverecord=ActivityDoneModel()
-        saverecord.NameAct='Memory'
-        saverecord.PseudoC=userid
-        ###saverecord.PseudoP=None
-        saverecord.Grade=100
+        saverecord.NameAct=request.POST.get('Name')
+        saverecord.PseudoC=request.POST.get('Pseudo')
+        saverecord.PseudoP=request.POST.get('PseudoP')
+        saverecord.Grade=request.POST.get('Grade')
         saverecord.save() 
-        return ActivityDash(request)
-    else:
-        return render(request,"ActivityDashBoard/index.html")
+    return ChildDash(request,userid)
 
 def index(request):
     return render(request,'index.html')
