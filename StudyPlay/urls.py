@@ -1,3 +1,4 @@
+from django.conf.urls import include
 from django.urls import path
 from . import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -11,6 +12,11 @@ urlpatterns = [
     path('registerformparents', views.registerFormParents),
     path('ErrorPage', views.ErrorPage, name="ErrorPage"),
     path('index', views.index, name='index'),
+    path('VideoLibrary', views.VideoLibrary, name='VideoLibrary'),
+    path('getGrade/<str:userid>/', views.getGrade),
+    path('Statistics/<str:userid>/', views.Statistics,name="Statistics"),
+    path('Statistics/<str:userid>/', views.Statistics,include('StudyPlay.urls')),
+    path('Gradesofchild/<str:userid>/', views.Gradesofchild, name='Gradesofchild'),
     path('send_notification', views.send_notification),
     path('after_approuval_worker_insert', views.after_approuval_worker_insert),
     path('get_new_workers_table', views.get_new_workers_table),
@@ -30,6 +36,7 @@ urlpatterns = [
     path('change_pseudo', views.CHANGE_PSEUDO, name='change_pseudo'),
     path('changepicture', views.changepicture, name='changepicture'),
     path('change_picture', views.CHANGE_PICTURE, name='change_picture'),
+    path('Statistics', views.Statistics, name='Statistics'),
     path('login', views.login),
     path('Deleteworker', views.Deleteworker),
     path('get_workers_table', views.get_workers_table),

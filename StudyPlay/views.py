@@ -104,6 +104,53 @@ def AdminDash(request):
         print(result)
         return render(request, 'AdminDashBoard/index.html',result)
 
+def getGrade(request,userid):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM child")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Pseudo,Password,Age,Email,ParentsPseudo,profile_pic = item
+        if ParentsPseudo==userid:
+            result['data'].append({
+                'ID':ID,
+                'Pseudo':Pseudo,
+                'Password':Password,
+                'Age':Age,
+                'Email':Email,
+                'ParentsPseudo':ParentsPseudo,
+                'profile_pic':profile_pic,
+            })
+        print(result)
+    #regular registration before 
+    #regular registration before 
+    return render(request,'ParentsDashBoard/TableChildGrade.html',result) 
+
+def VideoLibrary(request):
+    #regular registration before 
+    return render(request,'ChildDashBoard/VideoLibrary.html')    #regular registration before 
+
+def Gradesofchild(request,userid):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM activityDone")
+    data = cursor.fetchall()
+    for item in data:
+        ID,NameAct,PseudoC,PseudoP,Grade = item
+        if PseudoC==userid:
+            result['data'].append({
+                'ID':ID,
+                'NameAct':NameAct,
+                'PseudoC':PseudoC,
+                'PseudoP':PseudoP,
+                'Grade':Grade,
+            })
+        print(result)
+    #regular registration before 
+    return render(request,'ParentsDashBoard/Gradesofchild.html',result) 
+
 def ActivityDash(request,userid):
     result={'data': [], 
             'data1' : [],
@@ -143,7 +190,6 @@ def ActivityDash(request,userid):
     print(result)
     return render(request,'ActivityDashBoard/index.html', result)
 
-
 def ExerciceLecture(request,userid):
     return render(request,'ActivityDashBoard/ExerciceLecture.html')
 
@@ -180,7 +226,6 @@ def getActivityDone(request,nameAct,userid):
     print(result)
     return render(request,'ActivityDashBoard/getActivityDone.html',result)  
         
-
 def AddGrades(request,userid): 
     if request.method =='POST':
         saverecord=ActivityDoneModel()
@@ -405,13 +450,14 @@ def get_child_FromP_table(request):
     cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Age,Email,ParentsPseudo = item
+        ID,Pseudo,Password,Age,Email,profile_pic,ParentsPseudo = item
         result['data'].append({
             'ID':ID,
             'Pseudo':Pseudo,
             'Password':Password,
             'Age':Age,
             'Email':Email,
+            'profile_pic':profile_pic,
             'ParentsPseudo':ParentsPseudo,
             })
     return render(request,'AdminDashBoard/getchild.html', result)
@@ -423,12 +469,14 @@ def get_parents_table(request):
     cursor.execute("SELECT * FROM Parents")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Email = item
+        ID,Pseudo,Password,Email,country,profile_pic = item
         result['data'].append({
             'id':ID,
             'Pseudo':Pseudo,
             'Password':Password,
             'Email':Email,
+            'country':country,
+            'profile_pic':profile_pic,
         })
     return render(request,'AdminDashBoard/getparents.html', result)
 
@@ -534,7 +582,6 @@ def DeleteActivity(request):
         messages.success(request,'Activity doesnt exist in the system ')
         return AdminDash(request)
 
-
 def after_approuval_child_insert(request):
     cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()  
@@ -592,7 +639,7 @@ def get_child_table(request,userid):
     cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Age,Email,profile_pic,ParentsPseudo = item
+        ID,Pseudo,Password,Age,Email,ParentsPseudo,profile_pic = item
         if ParentsPseudo==userid:
             result['data'].append({
                 'ID':ID,
@@ -600,9 +647,12 @@ def get_child_table(request,userid):
                 'Password':Password,
                 'Age':Age,
                 'Email':Email,
-                'profile_pic':profile_pic,
                 'ParentsPseudo':ParentsPseudo,
+                'profile_pic':profile_pic,
+               
             })
+     
+                    
         print(result)
     return render(request,'ParentsDashBoard/deletechild.html', result)
 
@@ -790,8 +840,8 @@ def pie_chart(request):
         'data': data,
     })
 
-
 def send_notification(request):
+
     """client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
     if request.method == 'POST':
         user_whatsapp_number = request.POST['user_number']
@@ -806,3 +856,17 @@ def send_notification(request):
         print(message.sid)
         return HttpResponse('Great! Expect a message...')"""
     return render(request, 'phone.html')
+
+def Statistics(request,userid):
+    labels = []
+    data = []
+    queryset_labels = ActivityDoneModel.objects.values('NameAct')
+    queryset_data = ActivityDoneModel.objects.values('Grade')
+    for entry in queryset_labels:
+        labels.append(entry['NameAct'])
+    for entry in queryset_data:
+        data.append(entry['Grade'])
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
