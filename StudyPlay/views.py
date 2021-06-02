@@ -111,7 +111,7 @@ def getGrade(request,userid):
     cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Age,Email,ParentsPseudo,profile_pic = item
+        ID,Pseudo,Password,Age,Email,profile_pic,ParentsPseudo, = item
         if ParentsPseudo==userid:
             result['data'].append({
                 'ID':ID,
@@ -126,6 +126,21 @@ def getGrade(request,userid):
     #regular registration before 
     #regular registration before 
     return render(request,'ParentsDashBoard/TableChildGrade.html',result) 
+
+def getActivityForChild(request,userid):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT ID,Name FROM activities")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Name= item
+        if Name!='Lecture':
+            result['data'].append({
+                'Name':Name,
+            })
+    print(result)
+    return render(request,'ParentsDashBoard/TableActivitiesGrade.html',result) 
 
 def VideoLibrary(request):
     #regular registration before 
@@ -203,12 +218,17 @@ def ExerciseMemory(request,userid):
     
 def getActivityDone(request,nameAct,userid):
     result={'data': [], 
-            'data1' : [] 
+            'data1' : [], 
+            'data2' : []
             }
     cursor.execute("SELECT ID,Name FROM activities")
     data = cursor.fetchall()
     cursor.execute("SELECT Pseudo,ParentsPseudo FROM child")
     data1 = cursor.fetchall()
+    cursor.execute("SELECT ID,PseudoC,NameAct,NumOfGame FROM activitydone")
+    data2 = cursor.fetchall()
+    cursor.execute("SELECT ID,max(NumOfGame) FROM activitydone WHERE activitydone.NameAct='%s';"%(nameAct))
+    data3 = cursor.fetchall()
     for item in data:
         ID,Name = item
         if Name==nameAct:
@@ -225,6 +245,21 @@ def getActivityDone(request,nameAct,userid):
                 'ParentsPseudo':ParentsPseudo,
                 'Grade':random.randint(75,100)
             })
+    for item in data3:
+        ID,maxN=item
+
+    for item in data2:
+        ID,PseudoC,NameAct,NumOfGame=item
+        if PseudoC==userid and NameAct==nameAct and NumOfGame==maxN:
+            result['data2'].append({
+                'ID':ID,
+                'NumOfGame':NumOfGame+1,
+            })
+            break
+
+
+
+           
     print(result)
     return render(request,'ActivityDashBoard/getActivityDone.html',result)  
         
@@ -235,6 +270,7 @@ def AddGrades(request,userid):
         saverecord.PseudoC=request.POST.get('Pseudo')
         saverecord.PseudoP=request.POST.get('PseudoP')
         saverecord.Grade=request.POST.get('Grade')
+        saverecord.NumOfGame=request.POST.get('NumOfGame')
         saverecord.save() 
     return ChildDash(request,userid)
 
@@ -287,13 +323,14 @@ def getChildrenInformation(request):
     cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Age,Email,ParentsPseudo = item
+        ID,Pseudo,Password,Age,Email,profile_pic,ParentsPseudo = item
         result['data'].append({
             'ID':ID,
             'Pseudo':Pseudo,
             'Password':Password,
             'Age':Age,
             'Email':Email,
+            'profile_pic':profile_pic,
             'ParentsPseudo':ParentsPseudo,
         })
         print(result)
@@ -862,7 +899,7 @@ def send_notification(request):
 def Statistics(request):
     labels = []
     data = []
-    queryset_labels = ActivityDoneModel.objects.values('NameAct')
+    queryset_labels = ActivityDoneModel.objects.values('NumOfGame')
     queryset_data = ActivityDoneModel.objects.values('Grade')
     for entry in queryset_labels:
         labels.append(entry['NameAct'])

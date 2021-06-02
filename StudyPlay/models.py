@@ -82,6 +82,7 @@ class ActivityDoneModel(models.Model):
     PseudoC = models.CharField(db_column='PseudoC',default=None,max_length=100)
     PseudoP = models.CharField(db_column='PseudoP',default=None,max_length=100)
     Grade = models.CharField(db_column='Grade',default=None,max_length=100)
+    NumOfGame = models.IntegerField(db_column='NumOfGame',default=1)
     class Meta:
         managed= True
         db_table='activityDone'

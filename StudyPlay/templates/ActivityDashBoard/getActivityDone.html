@@ -64,6 +64,12 @@
                   <input type="name" id="Grade" name="Grade" value="{{item.Grade}}" class="form-control required">
               </div>
               {% endfor %}
+              {% for item in data2 %}
+              <div class="input-block">
+                <label for="NumOfGame">NumOfGame</label>
+                <input type="name" id="NumOfGame" name="NumOfGame" value="{{item.NumOfGame}}" class="form-control required">
+              </div>
+              {% endfor %}
             <button id="login-submit">submit</button> 
           </form>
         </div>

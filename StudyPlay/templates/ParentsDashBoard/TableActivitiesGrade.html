@@ -1,5 +1,5 @@
 {% load static %}
-<h2>חולים ברשימת המתנה</h2>
+<h2>Information about my children</h2>
 <div class="ripple-background">
   <div class="circle xxlarge shade1"></div>
   <div class="circle xlarge shade2"></div>
@@ -10,58 +10,24 @@
 <div class="table-wrapper">
   <table class="fl-table">
       <thead>
-          <tr>
-              <th>שם</th>
-              <th>מס טלאפון</th>
-              <th>ת"ז</th>
-              <th>מס סימפטומים</th>
-              <th>גיל</th>
-              <th>עובד</th>
+          <tr>           
+              <th>Activities name</th>
           </tr>
       </thead>
       <tbody>
           {% for item in data %}
               <tr>
-                  <td>{{item.name}}</td>
-                  <td>{{item.telephone}}</td>
-                  <td>{{item.taz}}</td>
-                  <td>{{item.symptomes}}</td>
-                  <td>{{item.age}}</td>
-                  <td>{{item.workerid}}</td>
+                  <td><a href="/StudyPlay/Gradesofchild/{{item.Pseudo}}">activity {{item.Name}}</a></td>          
               </tr>
           {% endfor %}
       </tbody>
   </table>    
 </div>
-<div class="login-form">
-      <img src="{% static 'images/logo.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
-      <div class="form-container">
-        <div class="form-heading">
-          העברת פרטי חולה חדש לעובד 
-        </div>
-        <img src="{% static 'images/logo.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
-        <div class="form-element">
-          <form action="//assign_patient" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
-              {% csrf_token %}
-              <label class="fa fa-user" for="telephone"></label>
-              <input type="text" id="telephone" name="telephone" placeholder="...הזן מס' טלפון">
-        </div>
-        <div class="form-element">
-          <label class="fa fa-lock" for="taz"></label>
-          <input type="text" id="taz" name="taz" placeholder="...הזן מס' תז">
-        </div> 
-        <div class="form-element">
-          <label class="fa fa-lock" for="workerid"></label>
-          <input type="int" id="workerid" name="workerid" placeholder="...הזן מס' זיהוי עובד">
-        </div> 
-        <div class="form-element">
-          <button id="login-submit">הכנס</button> 
-        </form>
-      </div>
   
-    </div>
-  
-  <style>
+ <style>
+
+  @import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css";
+  @import "https://fonts.googleapis.com/css?family=Open+Sans:400,600|Raleway";
   @import url('https://fonts.googleapis.com/css?family=Amatic+SC');
 
 
@@ -342,9 +308,7 @@ body{
         text-align: center;
     }
 }
-@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css";
-@import "https://fonts.googleapis.com/css?family=Open+Sans:400,600|Raleway";
-  
+
   * {
     margin:0px;
     padding:0px;
@@ -360,7 +324,7 @@ body{
     left:50%;
     transform:translate(-50%,-50%);
     width:350px;
-    height:600px;
+    height:680px;
     background:#f5f5f5;
     overflow:hidden;
     box-shadow:10px 6px 10px #555;
