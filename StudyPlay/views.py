@@ -135,21 +135,23 @@ def Gradesofchild(request,userid):
     result={
         'data': []
     }
-    cursor.execute("SELECT * FROM activityDone")
+    cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()
     for item in data:
-        ID,NameAct,PseudoC,PseudoP,Grade = item
-        if PseudoC==userid:
+        ID,Pseudo,Password,Age,Email,ParentsPseudo,profile_pic = item
+        if ParentsPseudo==userid:
             result['data'].append({
                 'ID':ID,
-                'NameAct':NameAct,
-                'PseudoC':PseudoC,
-                'PseudoP':PseudoP,
-                'Grade':Grade,
+                'Pseudo':Pseudo,
+                'Password':Password,
+                'Age':Age,
+                'Email':Email,
+                'ParentsPseudo':ParentsPseudo,
+                'profile_pic':profile_pic,
             })
         print(result)
     #regular registration before 
-    return render(request,'ParentsDashBoard/Gradesofchild.html',result) 
+    return render(request,'ParentsDashBoard/Gradesofchild.html') 
 
 def ActivityDash(request,userid):
     result={'data': [], 
@@ -857,7 +859,7 @@ def send_notification(request):
         return HttpResponse('Great! Expect a message...')"""
     return render(request, 'phone.html')
 
-def Statistics(request,userid):
+def Statistics(request):
     labels = []
     data = []
     queryset_labels = ActivityDoneModel.objects.values('NameAct')
