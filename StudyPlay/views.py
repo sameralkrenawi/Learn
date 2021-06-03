@@ -111,7 +111,7 @@ def getGrade(request,userid):
     cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Age,Email,ParentsPseudo,profile_pic, = item
+        ID,Pseudo,Password,Age,Email,profile_pic,ParentsPseudo, = item
         if ParentsPseudo==userid:
             result['data'].append({
                 'ID':ID,
@@ -131,28 +131,42 @@ def getActivityForChild(request,userid):
     result={
         'data': []
     }
-    cursor.execute("SELECT * FROM activityDone group by NameAct,PseudoC ")
+    cursor.execute("SELECT ID,Name FROM activities")
     data = cursor.fetchall()
     for item in data:
-        ID,NameAct,PseudoC,PseudoP,Grade,NumOfGame = item
-        if PseudoC==userid:
-            print(PseudoC,userid)
+        ID,Name= item
+        if Name!='Lecture':
             result['data'].append({
-                'ID':ID,
-                'NameAct':NameAct,
-                'PseudoC':PseudoC,
-                'PseudoP':PseudoP,
-                'Grade':Grade,
-                'NumOfGame':NumOfGame,
+                'Name':Name,
             })
-
-        print(result)
-    #regular registration before 
+    print(result)
     return render(request,'ParentsDashBoard/TableActivitiesGrade.html',result) 
 
 def VideoLibrary(request):
     #regular registration before 
     return render(request,'ChildDashBoard/VideoLibrary.html')    #regular registration before 
+
+def Gradesofchild(request,userid):
+    result={
+        'data': []
+    }
+    cursor.execute("SELECT * FROM child")
+    data = cursor.fetchall()
+    for item in data:
+        ID,Pseudo,Password,Age,Email,ParentsPseudo,profile_pic = item
+        if ParentsPseudo==userid:
+            result['data'].append({
+                'ID':ID,
+                'Pseudo':Pseudo,
+                'Password':Password,
+                'Age':Age,
+                'Email':Email,
+                'ParentsPseudo':ParentsPseudo,
+                'profile_pic':profile_pic,
+            })
+        print(result)
+    #regular registration before 
+    return render(request,'ParentsDashBoard/Gradesofchild.html') 
 
 def ActivityDash(request,userid):
     result={'data': [], 
@@ -309,7 +323,7 @@ def getChildrenInformation(request):
     cursor.execute("SELECT * FROM child")
     data = cursor.fetchall()
     for item in data:
-        ID,Pseudo,Password,Age,Email,profile_pic,ParentsPseudo = item
+        ID,Pseudo,Password,Age,Email,profile_pic,ParentsPseudo= item
         result['data'].append({
             'ID':ID,
             'Pseudo':Pseudo,
@@ -859,6 +873,7 @@ def pie_chart(request):
     for country in queryset:
         labels.append(country.Name)
         data.append(country.Count)
+
     return render(request, 'AdminDashBoard/pie_chart.html', {
         'labels': labels,
         'data': data,
@@ -881,22 +896,16 @@ def send_notification(request):
         return HttpResponse('Great! Expect a message...')"""
     return render(request, 'phone.html')
 
-def Statistics(request,userid,NameAct):  
+def Statistics(request):
     labels = []
     data = []
-    queryset_PseudoC = ActivityDoneModel.objects.values('PseudoC')
-    queryset_NameAct = ActivityDoneModel.objects.values('NameAct')
     queryset_labels = ActivityDoneModel.objects.values('NumOfGame')
     queryset_data = ActivityDoneModel.objects.values('Grade')
-    for count in range(len(queryset_PseudoC)):
-        if list(queryset_PseudoC[count].values())[0]==userid and list(queryset_NameAct[count].values())[0]==NameAct :
-            labels.append(list(queryset_labels[count].values())[0])
-            print(labels,count)
-            data.append(list(queryset_data[count].values())[0])
-            print(data,count)
-    return render(request,'ParentsDashBoard/Gradesofchild.html',{
-                'labels': labels,
-                'data': data,
-            })
-        
-
+    for entry in queryset_labels:
+        labels.append(entry['NameAct'])
+    for entry in queryset_data:
+        data.append(entry['Grade'])
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
