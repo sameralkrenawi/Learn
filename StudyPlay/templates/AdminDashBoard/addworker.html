@@ -1,5 +1,5 @@
 {% load static %}
-<h2>עובדים ברשימת המתנה</h2>
+<h2>Table of workers</h2>
 <div class="ripple-background">
   <div class="circle xxlarge shade1"></div>
   <div class="circle xlarge shade2"></div>
@@ -38,29 +38,28 @@
   <img src="{% static 'images/logostudyplay.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
   <div class="form-container">
     <div class="form-heading">
-      הכנסת עובד למערכת
+      Add worker
     </div>
     <img src="{% static 'images/logostudyplay.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
     <div class="input-block">
       <form action="/StudyPlay/after_approuval_worker_insert" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
         <fieldset>
           {% csrf_token %}
-          <legend>אינה הכניס את ת"ז שם וסמסמא כדאי להרשם</legend>
           <div class="input-block">
-            <label for="id">ת"ז</label>
-            <input type="id" minlength="3" id="id" name="id" placeholder="...הזן id ת.ז " class="form-control required">
+            <label for="id">ID</label>
+            <input type="id" minlength="3" id="id" name="id" placeholder="Put id..." class="form-control required">
           </div>
           <div class="input-block">
-            <label for="name">שם</label>
-            <input type="name" id="name" name="name" placeholder="...הזן שם name " class="form-control required">
+            <label for="name">Name</label>
+            <input type="name" id="name" name="name" placeholder="Put name..." class="form-control required">
           </div>
           <div class="input-block">
-        <label for="password">סיסמה</label>
-              <input type="password" id="password" name="password" placeholder="...הזן סיסמה" class="form-control required">
+        <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="Put password..." class="form-control required">
       </div>
       <div class="input-block">
       <label for="email">email</label>
-      <input type="email" id="email" name="email" placeholder="...הזן email" class="form-control required">
+      <input type="email" id="email" name="email" placeholder="Put email..." class="form-control required">
     </div>
         <div class="form-element">
           <div class="input-block text-md-right">
@@ -68,13 +67,13 @@
                   <div class="form-element">
                       <select id="type" name="type" class="form-control required">
                           <option selected></option>
-                          <option>עובד מדינה</option>
-                          <option>מנהל</option>
+                          <option>Front-end</option>
+                          <option>Back-end</option>
                       </select>
                   </div>
               </div>
         <div class="form-element">
-          <button id="login-submit">הכנס</button> 
+          <button id="login-submit">Submit</button> 
         </form>
       </div>
   

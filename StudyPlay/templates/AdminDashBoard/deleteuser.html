@@ -1,5 +1,5 @@
 {% load static %}
-<h2>TABLE OF WORKERS </h2>
+<h2>DELETE WORKERS </h2>
 <div class="ripple-background">
   <div class="circle xxlarge shade1"></div>
   <div class="circle xlarge shade2"></div>
@@ -37,21 +37,21 @@
     <img src="{% static 'images/logostudyplay.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
     <div class="form-container">
       <div class="form-heading">
-        מחיקת עובד
+        Delete workers
       </div>
       <img src="{% static 'images/logostudyplay.png' %}" width="75" height="77" id="icon" alt="User Icon"/>
       <div class="form-element">
         <form action="/StudyPlay/Deleteworker" method="POST" id="login-form" class="form form-login" autocomplete="off" role="main">
             {% csrf_token %}
             <label class="fa fa-user" for="taz"></label>
-            <input type="text" id="id" name="id" placeholder="...הזן תז">
+            <input type="text" id="id" name="id" placeholder="Put id...">
       </div>
       <div class="form-element">
         <label class="fa fa-lock" for="name"></label>
-        <input type="text" id="name" name="name" placeholder="...הזן שם העובד">
+        <input type="text" id="name" name="name" placeholder="Put name...">
       </div> 
       <div class="form-element">
-        <button id="login-submit">מחק</button> 
+        <button id="login-submit">Delete</button> 
       </form>
     </div>
   </div>

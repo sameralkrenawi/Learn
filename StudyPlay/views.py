@@ -549,7 +549,7 @@ def login(request):
         if useridtest==Pseudo and passwordtest == Password:
             return WorkerDash(request)        
     else :
-        messages.error(request,' הפרטים שהוזנו לא נמצאים במערכת נא לחכות לאישור אם הפרטים נכונים')   
+        messages.error(request,'Username and password doesnt matched, try again')   
         return registration(request)    
 
 def Deleteworker(request):
