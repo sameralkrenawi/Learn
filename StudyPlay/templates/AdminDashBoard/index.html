@@ -57,13 +57,13 @@
                 <div class="d-flex align-items-center">
                   <div class="icon icon-sm bg-green text-white"><i class="fas fa-envelope"></i></div>
                   <div class="text ml-2">
-                    <p class="mb-0">הודעות חדשות</p>
+                    <p class="mb-0">Message</p>
                   </div>
                 </div></a><a href="#" class="dropdown-item">
                 <div class="d-flex align-items-center">
                   <div class="icon icon-sm bg-blue text-white"><i class="fas fa-upload"></i></div>
                   <div class="text ml-2">
-                    <p class="mb-0">הקבצים שלי</p>
+                    <p class="mb-0">Files</p>
                   </div>
                 </div></a><a href="#" class="dropdown-item">
               <div class="dropdown-divider"></div><a href="#" class="dropdown-item text-center"><small class="font-weight-bold headings-font-family text-uppercase">ראה את כל ההתראות</small></a>
@@ -71,7 +71,7 @@
           </li>
           {% for item in data %}
           <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="{%static 'admindesign/img/AdminLogo.jpg'%}" alt="{{ item.Pseudo }}" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
-            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">Hello {{ item.Pseudo }}</strong><small>Admin user</small></a>
+            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">Hello {{ item.Pseudo }}</strong><small>Worker user</small></a>
               <div class="dropdown-divider"></div><a href="registerform" class="dropdown-item">Exit</a>
             </div>
           </li>
