@@ -14,7 +14,6 @@ class AdminModel(models.Model):
         managed = True
         db_table = 'admin'
 
-
 class ChildModel(models.Model):
     ID = models.IntegerField(db_column='ID',primary_key=True)  # Field name made lowercase.
     Pseudo= models.CharField(db_column='Pseudo',max_length=10)
@@ -27,7 +26,6 @@ class ChildModel(models.Model):
         managed = True
         db_table = 'child'
 
-
 class WorkersModel(models.Model):  
     ID = models.IntegerField(db_column='ID',primary_key=True)  # Field name made lowercase.
     Workerid= models.CharField(db_column='Workerid',max_length=10)
@@ -38,7 +36,6 @@ class WorkersModel(models.Model):
     class Meta:
         managed = True
         db_table = 'workers'
-
 
 class ParentsModel(models.Model):
     ID = models.IntegerField(db_column='ID',primary_key=True)  # Field name made lowercase.
@@ -83,7 +80,6 @@ class ActivityDoneModel(models.Model):
     PseudoP = models.CharField(db_column='PseudoP',default=None,max_length=100)
     Grade = models.CharField(db_column='Grade',default=None,max_length=100)
     NumOfGame = models.IntegerField(db_column='NumOfGame',default=1)
-
     class Meta:
         managed= True
         db_table='activityDone'
