@@ -8,7 +8,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'python -m py_compile manage.py'
             }
         }
         stage('Test') {
@@ -20,7 +20,6 @@ pipeline {
             steps {
                 sh 'python -m py_compile StudyPlay/models.py StudyPlay/views.py'
                 sh 'python -m py_compile StudyPlay/urls.py'
-                sh 'python -m py_compile StudyPlay/tests.py'
             }
             /*post {
                 always {
