@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh 'python -m py_compile StudyPlay/models.py StudyPlay/views.py'
                 sh 'python -m py_compile StudyPlay/urls.py'
-                sh 'python -m py_compile StudyPlay/test.py'
+                sh 'python -m py_compile StudyPlay/tests.py'
             }
             /*post {
                 always {
