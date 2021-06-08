@@ -426,11 +426,4 @@ class YourTestClass(TestCase):
         print("Method: test_one_plus_one_equals_two.")
         self.assertEqual(1 + 1, 2)
 
-if __name__ == '__main__':
-    ############# Add these lines #############
-    import xmlrunner
-    runner = xmlrunner.XMLTestRunner(output='test-reports')
-    unittest.main(testRunner=runner)
-    ###########################################
-    unittest.main()
 
