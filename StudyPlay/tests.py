@@ -11,6 +11,27 @@ from django.test import TestCase,tag
 from django.test import Client
 import requests
 
+class TestU(TestCase):    
+    @tag('unit-test')
+    def test_changepseudo_Template(self):
+        c = Client()
+        response = c.get(reverse('changepseudo'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateNotUsed(response, 'changepseudo.html')
+
+    @tag('unit-test')
+    def test_changepicture_Template(self):
+        c = Client()
+        response = c.get(reverse('changepicture'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateNotUsed(response, 'changepicture.html')
+        
+    @tag('unit-test')
+    def test_CHANGE_PSEUDO_Template(self):
+        c = Client()
+        response = c.get(reverse('change_pseudo'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateNotUsed(response, 'registrationform.html')
 
 class TestUrls(unittest.TestCase):
     def testd(self):
@@ -29,7 +50,8 @@ class TestUrls(unittest.TestCase):
         print(resolve(url6))
         print(resolve(url7))
         print('______WORK TEST URL ______')
-      # -----------------------------test for Workers --------------------
+
+# -----------------------------test for Admin --------------------
 # -----------------------------test for Child --------------------
 class Childtest(TestCase):
     def test_Child_Good(self):
@@ -136,7 +158,7 @@ class Parentstest(TestCase):
         self.assertRedirects(response, reverse('login'))
         self.assertFalse(response.context["user"].is_authenticated)
 # -----------------------------tests for Parents user functionality --------------------
-class TeacherMessageFormTests(TestCase):
+class ParentsReviewFormTests(TestCase):
 
     @tag('unit-test')
     def test_Add_Message_Template(self):
@@ -230,6 +252,17 @@ class Workerstest(TestCase):
         print('______WORK TEST WORKER NO GOOD ENTER______')
         self.assertEqual(item.Workerid, 'dd')
         self.assertNotEqual(record, item)
+
+    def testRegisterWorkerAndLogin(self):
+        #User.objects.create(username='aa', password='aa')
+        data_login = {'Pseudo': 'www', 'Password': 'www'}
+        data_register = {'ID':'1','Adminid':'www','Pseudo':'www','Password':'aaa','Email':'dav@gmail.com','type':'Back-end'}
+        response = self.client.post(reverse('login'), data=data_register, follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(reverse('WorkerDash'), data=data_login, follow=True)
+        self.assertTemplateUsed(response, 'WorkerDashBoard/index.html')
+        self.assertRedirects(response, reverse('login'))
+        self.assertFalse(response.context["user"].is_authenticated)
 # ---------------------------------- test for Activities ---------------------------------------#
 class Activitiestest(TestCase):
     def test_Activities_Good(self):
@@ -261,6 +294,7 @@ class Activitiestest(TestCase):
         response = c.get(reverse('AddActivity'))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'AdminDashBoard/manageActivities.html')
+    
     '''
     @tag('unit-test')
     def test_Delete_Activities_GET(self):

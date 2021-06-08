@@ -803,6 +803,7 @@ def CHANGE_PSEUDO(request):
                 db_connection.commit()
                 messages.success(request,'Pseudo Change')
                 return registration(request)  
+            
         cursor.execute("SELECT Pseudo,Password FROM child")
         data = cursor.fetchall()    
         for item in data:
@@ -821,8 +822,9 @@ def CHANGE_PSEUDO(request):
                 db_connection.commit()
                 messages.success(request,'Pseudo Change')
                 return registration(request)  
+    else:
         messages.error(request,'! הפרט ים שהוזנו לא נמצאים במערכת')   
-        return changepassword(request)
+        return registration(request)
 
 def connect_From_P(request):
     result={
